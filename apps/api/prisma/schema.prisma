@@ -1,0 +1,344 @@
+// Rankly — data model (Milestone 1: core voting)
+// Extension points for later milestones (points, payments, news, battles, AI)
+// are noted inline but not implemented yet.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+// ─────────────────────────────────────── enums
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum VoteValue {
+  UP
+  DOWN
+}
+
+enum RankingType {
+  LEADERBOARD
+  BINARY
+  BATTLE
+}
+
+enum RankingStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  HIDDEN
+}
+
+enum ModerationLevel {
+  STANDARD
+  ELEVATED
+  STRICT
+}
+
+enum TimeWindow {
+  ALL_TIME
+  YEAR
+  MONTH
+  WEEK
+  DAY
+  LIVE
+}
+
+// ─────────────────────────────────────── users & auth
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  username     String   @unique
+  displayName  String?
+  passwordHash String
+  bio          String?  @db.VarChar(500)
+  avatarUrl    String?
+  role         Role     @default(USER)
+
+  // anti-fraud / vote-quality signals
+  reputation      Float    @default(0.5)
+  deviceTrust     Float    @default(0.5)
+  emailVerified   Boolean  @default(false)
+  lifetimeVotes   Int      @default(0)
+  bannedAt        DateTime?
+  lastActiveAt    DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  refreshTokens RefreshToken[]
+  votes         Vote[]
+  voteEvents    VoteEvent[]
+  rankings      Ranking[]      @relation("RankingCreator")
+  auditLogs     AuditLog[]
+
+  @@index([reputation])
+  @@map("users")
+}
+
+model RefreshToken {
+  id         String    @id @default(uuid()) @db.Uuid
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String    @db.Uuid
+  tokenHash  String    @unique
+  familyId   String    @db.Uuid
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  replacedById String? @db.Uuid
+  userAgent  String?
+  ip         String?
+  createdAt  DateTime  @default(now())
+
+  @@index([userId])
+  @@index([familyId])
+  @@map("refresh_tokens")
+}
+
+// ─────────────────────────────────────── taxonomy
+
+model Category {
+  id             String          @id @default(uuid()) @db.Uuid
+  slug           String          @unique
+  name           String
+  description    String?
+  icon           String?
+  parent         Category?       @relation("CategoryTree", fields: [parentId], references: [id])
+  parentId       String?         @db.Uuid
+  children       Category[]      @relation("CategoryTree")
+  position       Int             @default(0)
+
+  // spec §4: some categories never allow paid support
+  paidSupportEnabled Boolean      @default(true)
+  moderationLevel    ModerationLevel @default(STANDARD)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rankings Ranking[]
+
+  @@index([parentId])
+  @@map("categories")
+}
+
+// A real-world thing that can appear in many rankings (ChatGPT, Tokyo, ...).
+model Entity {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique
+  name        String
+  type        String? // "city" | "country" | "ai-tool" | "movie" | "app" | ...
+  description String?  @db.VarChar(1000)
+  imageUrl    String?
+  metadata    Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rankingItems RankingItem[]
+
+  @@index([type])
+  @@map("entities")
+}
+
+// ─────────────────────────────────────── rankings
+
+model Ranking {
+  id          String        @id @default(uuid()) @db.Uuid
+  slug        String        @unique
+  title       String
+  description String?       @db.VarChar(2000)
+  type        RankingType   @default(LEADERBOARD)
+  status      RankingStatus @default(PUBLISHED)
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String   @db.Uuid
+
+  creator   User?   @relation("RankingCreator", fields: [creatorId], references: [id])
+  creatorId String? @db.Uuid
+
+  // null = inherit Category.paidSupportEnabled
+  paidSupportEnabledOverride Boolean?
+
+  // denormalised for fast cards / sorting (source of truth = votes)
+  totalVotes     Int      @default(0)
+  distinctVoters Int      @default(0)
+  trendingScore  Float    @default(0)
+  trendingComputedAt DateTime?
+  lastVoteAt     DateTime?
+
+  // SEO
+  seoTitle       String?
+  seoDescription String? @db.VarChar(320)
+  ogImageUrl     String?
+
+  aiGenerated Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items RankingItem[]
+  votes Vote[]
+
+  @@index([categoryId])
+  @@index([status, trendingScore(sort: Desc)])
+  @@index([status, createdAt(sort: Desc)])
+  @@map("rankings")
+}
+
+model RankingItem {
+  id          String  @id @default(uuid()) @db.Uuid
+  ranking     Ranking @relation(fields: [rankingId], references: [id], onDelete: Cascade)
+  rankingId   String  @db.Uuid
+  entity      Entity? @relation(fields: [entityId], references: [id])
+  entityId    String? @db.Uuid
+  label       String
+  description String? @db.VarChar(500)
+  imageUrl    String?
+  position    Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  votes Vote[]
+  stats RankingItemStat[]
+
+  @@unique([rankingId, entityId])
+  @@index([rankingId])
+  @@map("ranking_items")
+}
+
+// One row per user per item. Casting again updates value; removing sets deletedAt.
+model Vote {
+  id            String    @id @default(uuid()) @db.Uuid
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String    @db.Uuid
+  rankingItem   RankingItem @relation(fields: [rankingItemId], references: [id], onDelete: Cascade)
+  rankingItemId String    @db.Uuid
+  ranking       Ranking   @relation(fields: [rankingId], references: [id], onDelete: Cascade)
+  rankingId     String    @db.Uuid
+
+  value  VoteValue
+  weight Float     @default(1) // vote-quality weight in [0,1] captured at cast time
+
+  // anti-fraud context
+  ip          String?
+  userAgent   String?
+  suspicion   Float   @default(0) // [0,1], set by fraud checks
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@unique([userId, rankingItemId])
+  @@index([rankingItemId, updatedAt])
+  @@index([rankingId, updatedAt])
+  @@index([userId, createdAt])
+  @@map("votes")
+}
+
+// Append-only log of every vote action — anti-fraud + transparency.
+model VoteEvent {
+  id            String    @id @default(uuid()) @db.Uuid
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String    @db.Uuid
+  rankingItemId String    @db.Uuid
+  rankingId     String    @db.Uuid
+  action        String // "cast" | "change" | "retract"
+  value         VoteValue?
+  weight        Float
+  ip            String?
+  userAgent     String?
+  createdAt     DateTime  @default(now())
+
+  @@index([userId, createdAt])
+  @@index([rankingId, createdAt])
+  @@map("vote_events")
+}
+
+// Cached per (item, window) aggregate + computed scores. Refreshed after votes.
+model RankingItemStat {
+  id            String      @id @default(uuid()) @db.Uuid
+  rankingItem   RankingItem @relation(fields: [rankingItemId], references: [id], onDelete: Cascade)
+  rankingItemId String      @db.Uuid
+  window        TimeWindow
+
+  up             Int   @default(0)
+  down           Int   @default(0)
+  weightedUp     Float @default(0)
+  weightedDown   Float @default(0)
+  distinctVoters Int   @default(0)
+  suspicionRatio Float @default(0)
+
+  // paid support (milestone 2) — kept at 0 for now, surfaced separately by design
+  paidSupportUnits  Float @default(0)
+  distinctSupporters Int  @default(0)
+
+  // computed by @rankly/shared scoreItem()
+  communityScore Float @default(0)
+  support        Float @default(0)
+  rankScore      Float @default(0)
+  certainty      Float @default(0)
+
+  lastVoteAt  DateTime?
+  computedAt  DateTime @default(now())
+
+  @@unique([rankingItemId, window])
+  @@index([window, rankScore(sort: Desc)])
+  @@map("ranking_item_stats")
+}
+
+// ─────────────────────────────────────── moderation & audit
+
+model Report {
+  id          String   @id @default(uuid()) @db.Uuid
+  reporterId  String?  @db.Uuid
+  subjectType String // "ranking" | "ranking_item" | "user"
+  subjectId   String   @db.Uuid
+  reason      String
+  details     String?  @db.VarChar(1000)
+  status      String   @default("OPEN") // OPEN | REVIEWING | RESOLVED | DISMISSED
+  createdAt   DateTime @default(now())
+  resolvedAt  DateTime?
+
+  @@index([status])
+  @@index([subjectType, subjectId])
+  @@map("reports")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  actor      User?    @relation(fields: [actorId], references: [id])
+  actorId    String?  @db.Uuid
+  action     String
+  targetType String?
+  targetId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([action, createdAt])
+  @@map("audit_logs")
+}
+
+// ─────────────────────────────────────── analytics
+
+model AnalyticsEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  userId    String?  @db.Uuid
+  sessionId String?
+  path      String?
+  props     Json?
+  createdAt DateTime @default(now())
+
+  @@index([name, createdAt])
+  @@map("analytics_events")
+}
