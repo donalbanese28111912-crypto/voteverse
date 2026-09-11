@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "rankly-web",
+      "name": "voteverse-web",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--workspace", "@rankly/web"],
+      "runtimeArgs": ["run", "dev", "--workspace", "@voteverse/web"],
       "port": 3000
     }
   ]

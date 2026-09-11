@@ -1,7 +1,7 @@
 import 'server-only';
 import { cookies } from 'next/headers';
 import { API_V1, COOKIE } from './config';
-import type { PublicUser } from '@rankly/shared';
+import type { PublicUser } from '@voteverse/shared';
 
 export interface Viewer {
   id: string;

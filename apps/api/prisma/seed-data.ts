@@ -1,4 +1,4 @@
-/** Static seed content for Rankly. Kept separate from seed.ts logic. */
+/** Static seed content for Voteverse. Kept separate from seed.ts logic. */
 
 export interface CategorySeed {
   slug: string;

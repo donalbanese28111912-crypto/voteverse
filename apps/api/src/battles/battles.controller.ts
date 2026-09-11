@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
-import { paginationQuerySchema } from '@rankly/shared';
+import { paginationQuerySchema } from '@voteverse/shared';
 import type { TimeWindow } from '@prisma/client';
 import { CurrentUser, Public } from '../common/decorators';
 import { JwtAuthGuard, OptionalJwtAuthGuard } from '../common/guards';

@@ -1,4 +1,4 @@
-// Rankly — data model (Milestone 1: core voting)
+// Voteverse — data model (Milestone 1: core voting)
 // Extension points for later milestones (points, payments, news, battles, AI)
 // are noted inline but not implemented yet.
 
@@ -295,7 +295,7 @@ model RankingItemStat {
   paidSupportUnits  Float @default(0)
   distinctSupporters Int  @default(0)
 
-  // computed by @rankly/shared scoreItem()
+  // computed by @voteverse/shared scoreItem()
   communityScore Float @default(0)
   support        Float @default(0)
   rankScore      Float @default(0)
@@ -309,7 +309,7 @@ model RankingItemStat {
   @@map("ranking_item_stats")
 }
 
-// ─────────────────────────────────────── Rankly Points & Boost
+// ─────────────────────────────────────── Voteverse Points & Boost
 
 // Every user has exactly one wallet. Balance is a cached mirror of the
 // PointsTransaction ledger below — it is never written directly from a
@@ -349,8 +349,8 @@ model PointsTransaction {
 }
 
 // One row per boost purchase. Always additive to a target item's UP support —
-// never mixed into vote counts, always shown to visitors as "Rankly Support"
-// / "Sponsored", and always capped (see @rankly/shared scoreItem()).
+// never mixed into vote counts, always shown to visitors as "Voteverse Support"
+// / "Sponsored", and always capped (see @voteverse/shared scoreItem()).
 model Boost {
   id            String      @id @default(uuid()) @db.Uuid
   booster       User        @relation(fields: [boosterId], references: [id], onDelete: Cascade)

@@ -1,5 +1,5 @@
 /**
- * Core types for the Rankly ranking engine.
+ * Core types for the Voteverse ranking engine.
  *
  * The engine is intentionally pure: it takes aggregated vote signals and
  * returns scores. It never touches the database, the clock, or the network,
@@ -79,7 +79,7 @@ export const DEFAULT_MODEL_CONFIG: RankingModelConfig = {
   z: 1.96,
   priorWeight: 12,
   priorMean: 0.62,
-  // Rankly Support can meaningfully move a rank position (up to +/-40pp of
+  // Voteverse Support can meaningfully move a rank position (up to +/-40pp of
   // rank score) but NEVER touches communityScore — the two are always shown
   // separately, and every boosted item is labeled "Sponsored" in the UI.
   maxSupportInfluence: 0.4,
@@ -96,7 +96,7 @@ export interface ItemScore {
   communityScore: number;
   /**
    * Separate, transparent paid contribution as a signed fraction, e.g.
-   * +0.042 => "Rankly Support +4.2%". Clamped to +/- maxSupportInfluence.
+   * +0.042 => "Voteverse Support +4.2%". Clamped to +/- maxSupportInfluence.
    */
   support: number;
   /**

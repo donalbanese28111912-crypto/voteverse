@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@rankly/shared'],
+  transpilePackages: ['@voteverse/shared'],
   experimental: {
-    optimizePackageImports: ['@rankly/shared'],
+    optimizePackageImports: ['@voteverse/shared'],
   },
   async rewrites() {
     return [];

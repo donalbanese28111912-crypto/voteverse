@@ -12,7 +12,7 @@ import {
   createRankingSchema,
   paginationQuerySchema,
   type CreateRankingInput,
-} from '@rankly/shared';
+} from '@voteverse/shared';
 import type { Request } from 'express';
 import type { TimeWindow } from '@prisma/client';
 import { CurrentUser, Public } from '../common/decorators';

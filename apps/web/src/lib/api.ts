@@ -23,7 +23,7 @@ interface FetchOpts {
 }
 
 /**
- * Server-side fetch to the Rankly API. When `auth` is set, it attaches the
+ * Server-side fetch to the Voteverse API. When `auth` is set, it attaches the
  * httpOnly access-token cookie and transparently refreshes once on 401.
  */
 export async function api<T>(path: string, opts: FetchOpts = {}): Promise<T> {

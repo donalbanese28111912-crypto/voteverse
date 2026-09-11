@@ -6,7 +6,7 @@ export function Logo({ className = '' }: { className?: string }) {
         <rect x="10" y="8" width="4" height="13" rx="1" fill="var(--ink)" />
         <rect x="17" y="3" width="4" height="18" rx="1" fill="var(--color-up)" />
       </svg>
-      <span className="text-lg font-extrabold tracking-tight">RANKLY</span>
+      <span className="text-lg font-extrabold tracking-tight">VOTEVERSE</span>
     </span>
   );
 }

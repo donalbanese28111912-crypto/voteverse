@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { Paginated, RankingCard } from '@rankly/shared';
+import type { Paginated, RankingCard } from '@voteverse/shared';
 import { api, ApiError, publicApi } from '@/lib/api';
 import { RankingCard as Card } from '@/components/ranking-card';
 
@@ -37,7 +37,7 @@ export async function generateMetadata({
   return {
     title: `${cat.name} rankings`,
     description:
-      cat.description ?? `Community rankings and opinion votes in ${cat.name} on Rankly.`,
+      cat.description ?? `Community rankings and opinion votes in ${cat.name} on Voteverse.`,
     alternates: { canonical: `/c/${cat.slug}` },
   };
 }
@@ -69,7 +69,7 @@ export default async function CategoryPage({
       {cat.description && <p className="mt-1 text-[var(--ink-2)]">{cat.description}</p>}
       {!cat.paidSupportEnabled && (
         <p className="mt-2 text-xs text-[var(--ink-3)]">
-          Paid Rankly Support is disabled in this category to protect its
+          Paid Voteverse Support is disabled in this category to protect its
           credibility.
         </p>
       )}

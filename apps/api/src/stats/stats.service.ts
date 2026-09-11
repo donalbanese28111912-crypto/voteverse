@@ -1,11 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import type { Prisma, TimeWindow } from '@prisma/client';
 import {
   DEFAULT_MODEL_CONFIG,
   scoreItem,
   type RankingModelConfig,
   type VoteAggregate,
-} from '@rankly/shared';
+} from '@voteverse/shared';
+import type { AppConfig } from '../config/configuration';
 import { PrismaService } from '../prisma/prisma.service';
 import { ALL_WINDOWS, windowStart } from './time-window';
 
@@ -13,7 +15,10 @@ import { ALL_WINDOWS, windowStart } from './time-window';
 export class StatsService {
   private readonly logger = new Logger(StatsService.name);
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly config: ConfigService<{ app: AppConfig }, true>,
+  ) {}
 
   /**
    * Recompute cached stats for every window of one ranking item, then roll the
@@ -189,7 +194,11 @@ export class StatsService {
   private modelConfigFor(category: {
     paidSupportEnabled: boolean;
   }): Partial<RankingModelConfig> {
-    if (!category.paidSupportEnabled) {
+    // Monetization is switched off platform-wide for launch — any existing
+    // or future Boost rows get zero influence on rankScore, so nothing is
+    // silently swayed by payment while the feature is disabled.
+    const boostEnabled = this.config.get('app', { infer: true }).features.boostEnabled;
+    if (!boostEnabled || !category.paidSupportEnabled) {
       return { ...DEFAULT_MODEL_CONFIG, maxSupportInfluence: 0 };
     }
     return DEFAULT_MODEL_CONFIG;

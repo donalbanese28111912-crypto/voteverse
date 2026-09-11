@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import type { BattleView } from '@rankly/shared';
+import type { BattleView } from '@voteverse/shared';
 import { BattleVote } from './battle-vote';
 
 export function ThisOrThatLoop({ authed }: { authed: boolean }) {

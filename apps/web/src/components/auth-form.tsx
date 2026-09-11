@@ -44,7 +44,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
   return (
     <div className="mx-auto max-w-sm pt-16">
       <h1 className="text-2xl font-extrabold tracking-tight">
-        {mode === 'login' ? 'Log in to Rankly' : 'Create your Rankly account'}
+        {mode === 'login' ? 'Log in to Voteverse' : 'Create your Voteverse account'}
       </h1>
       <p className="mt-1 text-sm text-[var(--ink-2)]">
         An account is required to vote — it keeps rankings honest.
@@ -98,7 +98,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
 
       {mode === 'login' && (
         <p className="mt-6 rounded-lg bg-[var(--surface-2)] p-3 text-xs text-[var(--ink-3)]">
-          Demo account: <code>demo@seed.rankly.dev</code> / <code>password123</code>
+          Demo account: <code>demo@seed.voteverse.dev</code> / <code>password123</code>
         </p>
       )}
     </div>

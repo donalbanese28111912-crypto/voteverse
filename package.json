@@ -1,8 +1,8 @@
 {
-  "name": "rankly",
+  "name": "voteverse",
   "version": "0.1.0",
   "private": true,
-  "description": "Rankly — Discover. Vote. Rank. The world's opinion layer.",
+  "description": "Voteverse — Discover. Vote. Rank. The world's opinion layer.",
   "workspaces": [
     "packages/*",
     "apps/*"
@@ -13,10 +13,10 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "db:generate": "npm run -w @rankly/api prisma:generate",
-    "db:migrate": "npm run -w @rankly/api prisma:migrate",
-    "db:seed": "npm run -w @rankly/api prisma:seed",
-    "db:reset": "npm run -w @rankly/api prisma:reset",
+    "db:generate": "npm run -w @voteverse/api prisma:generate",
+    "db:migrate": "npm run -w @voteverse/api prisma:migrate",
+    "db:seed": "npm run -w @voteverse/api prisma:seed",
+    "db:reset": "npm run -w @voteverse/api prisma:reset",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\""
   },
   "devDependencies": {
@@ -29,15 +29,6 @@
   },
   "packageManager": "npm@11.17.0",
   "allowScripts": {
-    "@nestjs/core@10.4.22": true,
-    "@prisma/client@6.19.3": true,
-    "@prisma/engines@6.19.3": true,
-    "@swc/core@1.16.2": true,
-    "argon2@0.41.1": true,
-    "esbuild@0.28.2": true,
-    "esbuild@0.21.5": true,
-    "prisma@6.19.3": true,
-    "sharp@0.35.4": true,
-    "unrs-resolver@1.12.2": true
+    "sharp@0.35.4": true
   }
 }

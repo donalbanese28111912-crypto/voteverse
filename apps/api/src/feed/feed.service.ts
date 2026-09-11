@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
-import type { RankingCard } from '@rankly/shared';
+import type { RankingCard } from '@voteverse/shared';
 import { BattlesService } from '../battles/battles.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { TrendingService } from '../trending/trending.service';

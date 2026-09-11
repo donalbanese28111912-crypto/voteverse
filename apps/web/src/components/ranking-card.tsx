@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { RankingCard as RankingCardData } from '@rankly/shared';
+import type { RankingCard as RankingCardData } from '@voteverse/shared';
 import { compact } from '@/lib/format';
 
 export function RankingCard({ card }: { card: RankingCardData }) {

@@ -30,7 +30,7 @@ async function bootstrap(): Promise<void> {
   app.enableShutdownHooks();
 
   await app.listen(cfg.port);
-  Logger.log(`🟢 Rankly API on http://localhost:${cfg.port}/api/v1`, 'Bootstrap');
+  Logger.log(`🟢 Voteverse API on http://localhost:${cfg.port}/api/v1`, 'Bootstrap');
 }
 
 void bootstrap();

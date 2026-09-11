@@ -9,7 +9,7 @@ export function ShareButton({ title, path }: { title: string; path: string }) {
     const url = `${location.origin}${path}`;
     if (navigator.share) {
       try {
-        await navigator.share({ title: `${title} — Rankly`, url });
+        await navigator.share({ title: `${title} — Voteverse`, url });
         return;
       } catch {
         /* fall through to copy */

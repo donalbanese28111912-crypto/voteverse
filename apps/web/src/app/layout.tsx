@@ -9,14 +9,14 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Rankly — Discover. Vote. Rank.',
-    template: '%s — Rankly',
+    default: 'Voteverse — Discover. Vote. Rank.',
+    template: '%s — Voteverse',
   },
   description:
-    "Rankly is where the world votes on everything. What does the community actually think is the best? Vote UP or DOWN and see where you stand.",
-  applicationName: 'Rankly',
+    "Voteverse is where the world votes on everything. What does the community actually think is the best? Vote UP or DOWN and see where you stand.",
+  applicationName: 'Voteverse',
   openGraph: {
-    siteName: 'Rankly',
+    siteName: 'Voteverse',
     type: 'website',
     url: SITE_URL,
   },
@@ -46,7 +46,7 @@ export default function RootLayout({
           {children}
         </main>
         <footer className="border-t border-[var(--border)] py-8 text-center text-xs text-[var(--ink-3)]">
-          Rankly — the world&apos;s opinion layer. Community opinion, not fact.
+          Voteverse — the world&apos;s opinion layer. Community opinion, not fact.
         </footer>
         <Suspense>
           <Analytics />

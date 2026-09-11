@@ -11,7 +11,7 @@ export default function NotFound() {
         href="/"
         className="mt-5 inline-block rounded-lg bg-[var(--ink)] px-5 py-2.5 font-semibold text-[var(--bg)]"
       >
-        Back to Rankly
+        Back to Voteverse
       </Link>
     </div>
   );

@@ -1,8 +1,8 @@
-# Rankly
+# Voteverse
 
 **Discover. Vote. Rank.** — the world's opinion layer.
 
-Rankly is a platform where people vote **UP** (🟢) or **DOWN** (🔴) on
+Voteverse is a platform where people vote **UP** (🟢) or **DOWN** (🔴) on
 practically anything — cities, AI tools, phones, movies, opinion topics — and a
 statistical ranking model turns those votes into trustworthy rankings.
 
@@ -22,7 +22,7 @@ This repo is **Milestone 1: the core voting MVP**.
 | Voting: UP/DOWN, click-again-to-retract, change vote, **no double counting** | ✅ |
 | Anti-fraud: rate limits, daily free-vote quota, velocity suspicion dampening, append-only `VoteEvent` log | ✅ |
 | Time windows: all-time / year / month / week / today / live | ✅ |
-| Transparent Community Score vs paid "Rankly Support" (support = 0 until Milestone 2) | ✅ |
+| Transparent Community Score vs paid "Voteverse Support" — built, currently **disabled for launch** (`FEATURE_BOOST_ENABLED=false`) | ✅ |
 | Trending score (velocity + acceleration + breadth + recency decay) | ✅ |
 | Homepage feed: hero vote, Trending, For You, Popular, per-category rows | ✅ |
 | Pages: ranking detail, category, entity, profile, search, trending, create | ✅ |
@@ -31,7 +31,7 @@ This repo is **Milestone 1: the core voting MVP**.
 | Analytics event pipeline | ✅ |
 | Mobile-first, theme-aware (light/dark), accessible vote controls | ✅ |
 
-**Deferred to later milestones:** Rankly Points & Stripe, News ingestion, AI
+**Deferred to later milestones:** real Stripe billing (Points/Boost is built and tested but switched off for the initial public launch — see `FEATURE_BOOST_ENABLED`), News ingestion, AI
 topic generation, Battles / This-or-That, gamification, admin dashboard, i18n,
 full moderation queue, native apps.
 
@@ -40,7 +40,7 @@ full moderation queue, native apps.
 ## Architecture
 
 ```
-rankly/
+voteverse/
   apps/
     api/    NestJS + Prisma + PostgreSQL   — REST, versioned at /api/v1
     web/    Next.js 15 (App Router) + Tailwind v4   — SSR/ISR for SEO
@@ -51,7 +51,7 @@ rankly/
 - The web app never touches the database. Browser mutations (voting, auth) go
   through Next.js **BFF route handlers** (`apps/web/src/app/api/*`) that hold the
   JWT in `httpOnly` cookies and forward to the API.
-- The ranking model is a **pure, fully-tested library** (`@rankly/shared`) so it
+- The ranking model is a **pure, fully-tested library** (`@voteverse/shared`) so it
   can be swapped or A/B tested. `StatsService` recomputes cached
   `RankingItemStat` rows (one per item per window) after every vote.
 
@@ -75,10 +75,10 @@ rankly/
 The database role/DBs this repo expects (create once):
 
 ```sql
-CREATE ROLE rankly LOGIN PASSWORD 'rankly_dev';
-CREATE DATABASE rankly_dev   OWNER rankly;
-CREATE DATABASE rankly_test  OWNER rankly;
-CREATE DATABASE rankly_shadow OWNER rankly;
+CREATE ROLE voteverse LOGIN PASSWORD 'voteverse_dev';
+CREATE DATABASE voteverse_dev   OWNER voteverse;
+CREATE DATABASE voteverse_test  OWNER voteverse;
+CREATE DATABASE voteverse_shadow OWNER voteverse;
 ```
 
 ### Setup
@@ -102,8 +102,8 @@ npm run dev
 ### Demo accounts (from the seed)
 | Email | Password | Role |
 |---|---|---|
-| `demo@seed.rankly.dev` | `password123` | user |
-| `admin@seed.rankly.dev` | `password123` | admin |
+| `demo@seed.voteverse.dev` | `password123` | user |
+| `admin@seed.voteverse.dev` | `password123` | admin |
 
 ### Useful scripts
 
@@ -111,7 +111,7 @@ npm run dev
 npm test                 # all workspaces (ranking-engine + api unit tests)
 npm run typecheck        # all workspaces
 npm run db:reset         # drop, re-migrate, re-seed
-npm run db:studio -w @rankly/api   # Prisma Studio
+npm run db:studio -w @voteverse/api   # Prisma Studio
 ```
 
 ---

@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* ── Rankly design tokens ───────────────────────────────────────
+/* ── Voteverse design tokens ───────────────────────────────────────
    Minimal, high-contrast, brand-neutral. Green = UP, Red = DOWN.
    Light and dark both defined explicitly. */
 @theme {
@@ -77,7 +77,7 @@
   }
 }
 
-@keyframes rankly-pop {
+@keyframes voteverse-pop {
   0% {
     transform: scale(1);
   }
@@ -89,11 +89,11 @@
   }
 }
 .animate-pop {
-  animation: rankly-pop 0.28s ease-out;
+  animation: voteverse-pop 0.28s ease-out;
 }
 
 /* ── Ambient animated backdrop ─────────────────────────────────── */
-.rankly-bg {
+.voteverse-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -102,7 +102,7 @@
   pointer-events: none;
 }
 
-.rankly-bg .orb {
+.voteverse-bg .orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(70px);
@@ -111,15 +111,15 @@
   mix-blend-mode: normal;
 }
 
-:root:not([data-theme='dark']) .rankly-bg .orb {
+:root:not([data-theme='dark']) .voteverse-bg .orb {
   opacity: 0.4;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .rankly-bg .orb {
+  :root:not([data-theme='light']) .voteverse-bg .orb {
     opacity: 0.55;
   }
 }
-:root[data-theme='dark'] .rankly-bg .orb {
+:root[data-theme='dark'] .voteverse-bg .orb {
   opacity: 0.55;
 }
 
@@ -164,7 +164,7 @@
   animation: drift-e 46s ease-in-out infinite;
 }
 
-.rankly-bg .grain {
+.voteverse-bg .grain {
   position: absolute;
   inset: 0;
   backdrop-filter: saturate(1.05);
@@ -195,7 +195,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rankly-bg .orb {
+  .voteverse-bg .orb {
     animation: none !important;
   }
 }

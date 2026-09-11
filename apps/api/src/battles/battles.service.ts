@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { TimeWindow } from '@prisma/client';
-import type { BattleCardView, BattleSide, BattleView, Paginated } from '@rankly/shared';
+import type { BattleCardView, BattleSide, BattleView, Paginated } from '@voteverse/shared';
 import { paginate, skipTake } from '../common/pagination';
 import { PrismaService } from '../prisma/prisma.service';
 

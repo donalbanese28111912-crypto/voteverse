@@ -7,7 +7,7 @@
  */
 export function AnimatedBackground() {
   return (
-    <div className="rankly-bg" aria-hidden="true">
+    <div className="voteverse-bg" aria-hidden="true">
       <span className="orb orb-a" />
       <span className="orb orb-b" />
       <span className="orb orb-c" />

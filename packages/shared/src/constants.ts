@@ -16,10 +16,10 @@ export const MODERATION_LEVELS = ['STANDARD', 'ELEVATED', 'STRICT'] as const;
 export type ModerationLevel = (typeof MODERATION_LEVELS)[number];
 
 /**
- * Categories where paid Rankly Points support is blocked by platform policy.
+ * Categories where paid Voteverse Points support is blocked by platform policy.
  * Currently empty — the product decision is that Boost is available
  * everywhere, always transparently labeled and capped (see
- * @rankly/shared scoreItem()). Kept as a lever: set per-category via
+ * @voteverse/shared scoreItem()). Kept as a lever: set per-category via
  * Category.paidSupportEnabled in the DB without a code change.
  */
 export const PAID_SUPPORT_BLOCKED_CATEGORY_SLUGS: readonly string[] = [];

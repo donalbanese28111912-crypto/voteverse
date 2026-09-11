@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { FEATURE_BOOST } from '@/lib/config';
 import type { Viewer } from '@/lib/session';
 
 export function UserMenu({ viewer }: { viewer: Viewer | null }) {
@@ -11,7 +12,7 @@ export function UserMenu({ viewer }: { viewer: Viewer | null }) {
   const [balance, setBalance] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!viewer) return;
+    if (!viewer || !FEATURE_BOOST) return;
     fetch('/api/points/wallet')
       .then((r) => (r.ok ? r.json() : null))
       .then((w) => setBalance(w?.balance ?? null))
@@ -46,12 +47,14 @@ export function UserMenu({ viewer }: { viewer: Viewer | null }) {
 
   return (
     <div className="flex items-center gap-2">
-      <Link
-        href="/points"
-        className="hidden items-center gap-1 rounded-full border border-[var(--border)] px-2.5 py-1 text-xs font-semibold sm:flex"
-      >
-        ⚡ {balance === null ? '···' : balance}
-      </Link>
+      {FEATURE_BOOST && (
+        <Link
+          href="/points"
+          className="hidden items-center gap-1 rounded-full border border-[var(--border)] px-2.5 py-1 text-xs font-semibold sm:flex"
+        >
+          ⚡ {balance === null ? '···' : balance}
+        </Link>
+      )}
       <div className="relative">
         <button
           onClick={() => setOpen((v) => !v)}
@@ -69,13 +72,15 @@ export function UserMenu({ viewer }: { viewer: Viewer | null }) {
             >
               @{viewer.username}
             </Link>
-            <Link
-              href="/points"
-              onClick={() => setOpen(false)}
-              className="block px-3 py-2 text-sm hover:bg-[var(--surface-2)] sm:hidden"
-            >
-              ⚡ {balance ?? '···'} Points
-            </Link>
+            {FEATURE_BOOST && (
+              <Link
+                href="/points"
+                onClick={() => setOpen(false)}
+                className="block px-3 py-2 text-sm hover:bg-[var(--surface-2)] sm:hidden"
+              >
+                ⚡ {balance ?? '···'} Points
+              </Link>
+            )}
             <Link
               href="/create"
               onClick={() => setOpen(false)}

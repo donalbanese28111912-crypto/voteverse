@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import type { BattleCardView, Paginated } from '@rankly/shared';
+import type { BattleCardView, Paginated } from '@voteverse/shared';
 import { publicApi } from '@/lib/api';
 import { compact } from '@/lib/format';
 

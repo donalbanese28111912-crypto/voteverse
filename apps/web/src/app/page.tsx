@@ -4,7 +4,7 @@ import { getViewer } from '@/lib/session';
 import { FeedSection } from '@/components/feed-section';
 import { HeroVote } from '@/components/hero-vote';
 import { BattlesRow } from '@/components/battles-row';
-import type { BattleCardView, RankingCard } from '@rankly/shared';
+import type { BattleCardView, RankingCard } from '@voteverse/shared';
 
 interface HomeFeed {
   hero: {
@@ -48,7 +48,7 @@ export default async function HomePage() {
           What do you think?
         </h1>
         <p className="mx-auto mt-2 max-w-xl text-[var(--ink-2)]">
-          Rankly is where the world votes on everything. Vote{' '}
+          Voteverse is where the world votes on everything. Vote{' '}
           <span className="font-semibold text-[var(--color-up)]">UP</span> or{' '}
           <span className="font-semibold text-[var(--color-down)]">DOWN</span> and see
           where you stand.
@@ -91,7 +91,7 @@ export default async function HomePage() {
       />
       <FeedSection
         title={viewer ? 'For you' : 'Popular rankings'}
-        subtitle={viewer ? 'Based on what you vote on' : 'The most-voted rankings on Rankly'}
+        subtitle={viewer ? 'Based on what you vote on' : 'The most-voted rankings on Voteverse'}
         href="/rankings"
         cards={viewer ? feed.forYou : feed.popular}
       />

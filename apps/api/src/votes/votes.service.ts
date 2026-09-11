@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { TimeWindow, VoteValue } from '@prisma/client';
-import { voteWeight, type CastVoteInput, type VoteResult } from '@rankly/shared';
+import { voteWeight, type CastVoteInput, type VoteResult } from '@voteverse/shared';
 import type { AppConfig } from '../config/configuration';
 import { PrismaService } from '../prisma/prisma.service';
 import { StatsService } from '../stats/stats.service';

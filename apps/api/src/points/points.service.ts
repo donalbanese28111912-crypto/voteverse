@@ -10,7 +10,7 @@ import {
   type BoostResult,
   type PurchaseInput,
   type WalletView,
-} from '@rankly/shared';
+} from '@voteverse/shared';
 import { PrismaService } from '../prisma/prisma.service';
 import { StatsService } from '../stats/stats.service';
 
@@ -85,7 +85,7 @@ export class PointsService {
 
     const wallet = await this.getOrCreateWallet(userId);
     if (wallet.balance < input.points) {
-      throw new BadRequestException('Not enough Rankly Points');
+      throw new BadRequestException('Not enough Voteverse Points');
     }
 
     const boost = await this.prisma.$transaction(async (tx) => {

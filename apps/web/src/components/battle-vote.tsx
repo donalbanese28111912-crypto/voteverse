@@ -2,8 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import type { BattleView } from '@rankly/shared';
+import type { BattleView } from '@voteverse/shared';
 import { compact } from '@/lib/format';
+import { FEATURE_BOOST } from '@/lib/config';
 import { BoostControl } from './boost-control';
 
 export function BattleVote({ battle, onNext }: { battle: BattleView; onNext?: () => void }) {
@@ -88,14 +89,16 @@ export function BattleVote({ battle, onNext }: { battle: BattleView; onNext?: ()
 
       {error && <p className="px-5 pb-3 text-sm text-[var(--color-down)]">{error}</p>}
 
-      <div className="flex divide-x divide-[var(--border)] border-t border-[var(--border)]">
-        <div className="flex-1 px-3 py-2">
-          <BoostControl rankingItemId={state.a.rankingItemId} initialSupport={state.a.support} />
+      {FEATURE_BOOST && (
+        <div className="flex divide-x divide-[var(--border)] border-t border-[var(--border)]">
+          <div className="flex-1 px-3 py-2">
+            <BoostControl rankingItemId={state.a.rankingItemId} initialSupport={state.a.support} />
+          </div>
+          <div className="flex-1 px-3 py-2">
+            <BoostControl rankingItemId={state.b.rankingItemId} initialSupport={state.b.support} />
+          </div>
         </div>
-        <div className="flex-1 px-3 py-2">
-          <BoostControl rankingItemId={state.b.rankingItemId} initialSupport={state.b.support} />
-        </div>
-      </div>
+      )}
     </div>
   );
 }

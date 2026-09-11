@@ -17,7 +17,7 @@ export async function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
-        <Link href="/" aria-label="Rankly home">
+        <Link href="/" aria-label="Voteverse home">
           <Logo />
         </Link>
         <nav className="ml-4 hidden items-center gap-1 md:flex">

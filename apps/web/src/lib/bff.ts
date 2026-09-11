@@ -5,7 +5,7 @@ import { API_V1, COOKIE } from './config';
 import { cookieOpts } from './api';
 
 /**
- * Forward a request to the Rankly API as the current viewer, refreshing the
+ * Forward a request to the Voteverse API as the current viewer, refreshing the
  * access token once on 401. Keeps JWTs in httpOnly cookies — the browser never
  * sees them.
  */

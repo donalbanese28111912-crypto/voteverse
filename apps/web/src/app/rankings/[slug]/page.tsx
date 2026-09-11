@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { RankingCard, RankingView } from '@rankly/shared';
+import type { RankingCard, RankingView } from '@voteverse/shared';
 import { api, ApiError, publicApi } from '@/lib/api';
 import { SITE_URL } from '@/lib/config';
 import { compact, timeAgo, WINDOW_LABELS } from '@/lib/format';
@@ -153,7 +153,7 @@ export default async function RankingPage({
       </div>
 
       <p className="mt-6 rounded-lg bg-[var(--surface-2)] p-3 text-xs text-[var(--ink-3)]">
-        This is Rankly Community Opinion, not objective fact. Scores use a
+        This is Voteverse Community Opinion, not objective fact. Scores use a
         statistical model (Wilson + Bayesian) so large, consistent votes outweigh
         small lucky ones.
       </p>

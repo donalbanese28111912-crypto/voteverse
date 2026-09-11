@@ -15,7 +15,7 @@ import {
   registerSchema,
   type LoginInput,
   type RegisterInput,
-} from '@rankly/shared';
+} from '@voteverse/shared';
 import type { Request } from 'express';
 import { CurrentUser } from '../common/decorators';
 import { JwtAuthGuard } from '../common/guards';

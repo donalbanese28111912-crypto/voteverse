@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { BattleCardView } from '@rankly/shared';
+import type { BattleCardView } from '@voteverse/shared';
 import { compact } from '@/lib/format';
 
 export function BattlesRow({ battles }: { battles: BattleCardView[] }) {

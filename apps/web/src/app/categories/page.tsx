@@ -4,7 +4,7 @@ import { publicApi } from '@/lib/api';
 
 export const metadata: Metadata = {
   title: 'Categories',
-  description: 'Every category on Rankly — AI, tech, travel, sports, movies, crypto and more.',
+  description: 'Every category on Voteverse — AI, tech, travel, sports, movies, crypto and more.',
 };
 
 export const revalidate = 300;
@@ -24,7 +24,7 @@ export default async function CategoriesPage() {
   return (
     <div className="pt-8">
       <h1 className="text-2xl font-extrabold tracking-tight">Categories</h1>
-      <p className="mt-1 text-[var(--ink-2)]">Rankly can rank practically anything.</p>
+      <p className="mt-1 text-[var(--ink-2)]">Voteverse can rank practically anything.</p>
 
       <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {tree.map((cat) => (

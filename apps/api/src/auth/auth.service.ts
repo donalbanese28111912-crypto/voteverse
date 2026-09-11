@@ -12,7 +12,7 @@ import type {
   LoginInput,
   PublicUser,
   RegisterInput,
-} from '@rankly/shared';
+} from '@voteverse/shared';
 import type { User } from '@prisma/client';
 import type { AppConfig } from '../config/configuration';
 import { PrismaService } from '../prisma/prisma.service';
@@ -55,7 +55,9 @@ export class AuthService {
       },
     });
 
-    await this.points.grantSignupBonus(user.id);
+    if (this.cfg.features.boostEnabled) {
+      await this.points.grantSignupBonus(user.id);
+    }
     const tokens = await this.issueTokens(user, null, null);
     return { user: toPublicUser(user), tokens };
   }

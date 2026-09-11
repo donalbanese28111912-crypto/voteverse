@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { purchaseSchema } from '@rankly/shared';
+import { purchaseSchema } from '@voteverse/shared';
 import { forward } from '@/lib/bff';
 
 export async function POST(req: NextRequest) {

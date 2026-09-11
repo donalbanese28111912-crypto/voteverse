@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
-import { castVoteSchema, type CastVoteInput } from '@rankly/shared';
+import { castVoteSchema, type CastVoteInput } from '@voteverse/shared';
 import type { Request } from 'express';
 import { CurrentUser } from '../common/decorators';
 import { JwtAuthGuard } from '../common/guards';

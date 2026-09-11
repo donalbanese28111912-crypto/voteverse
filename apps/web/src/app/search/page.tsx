@@ -45,7 +45,7 @@ export default async function SearchPage({
   return (
     <div className="pt-8">
       <h1 className="text-2xl font-extrabold tracking-tight">
-        {q ? <>Results for &ldquo;{q}&rdquo;</> : 'Search Rankly'}
+        {q ? <>Results for &ldquo;{q}&rdquo;</> : 'Search Voteverse'}
       </h1>
 
       {!results && (

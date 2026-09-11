@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 /**
- * Rankly Points packages (spec §3). Prices are placeholders; bigger packs
+ * Voteverse Points packages (spec §3). Prices are placeholders; bigger packs
  * carry a bonus. `priceCents` + `currency` are kept even though purchase is
  * currently a dev/test-mode stub (no real payment processor wired yet) so a
  * real provider (Stripe) can be dropped in later without changing the shape.

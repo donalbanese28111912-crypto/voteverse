@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { PointsPackage, WalletView } from '@rankly/shared';
+import type { PointsPackage, WalletView } from '@voteverse/shared';
 import { PUBLIC_API_V1 } from '@/lib/config';
 import { fullNumber, timeAgo } from '@/lib/format';
 

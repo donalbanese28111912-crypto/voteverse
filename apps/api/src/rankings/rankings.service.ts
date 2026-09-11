@@ -12,7 +12,7 @@ import {
   type RankingCard,
   type RankingItemView,
   type RankingView,
-} from '@rankly/shared';
+} from '@voteverse/shared';
 import { paginate, skipTake } from '../common/pagination';
 import { PrismaService } from '../prisma/prisma.service';
 import { StatsService } from '../stats/stats.service';

@@ -42,7 +42,7 @@ export async function generateMetadata({
     title: entity.name,
     description:
       entity.description ??
-      `What the Rankly community thinks of ${entity.name}: ${entity.overall.upPercent}% approval across ${compact(entity.overall.totalVotes)} votes.`,
+      `What the Voteverse community thinks of ${entity.name}: ${entity.overall.upPercent}% approval across ${compact(entity.overall.totalVotes)} votes.`,
     alternates: { canonical: `/e/${entity.slug}` },
   };
 }
@@ -77,7 +77,7 @@ export default async function EntityPage({
           </div>
           <div className="mt-1.5 flex justify-between text-xs text-[var(--ink-3)]">
             <span className="text-[var(--color-up)]">{entity.overall.upPercent}% up</span>
-            <span>{compact(entity.overall.totalVotes)} votes across Rankly</span>
+            <span>{compact(entity.overall.totalVotes)} votes across Voteverse</span>
             <span className="text-[var(--color-down)]">
               {100 - entity.overall.upPercent}% down
             </span>

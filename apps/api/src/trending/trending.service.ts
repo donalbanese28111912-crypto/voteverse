@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { trendingScore } from '@rankly/shared';
+import { trendingScore } from '@voteverse/shared';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()

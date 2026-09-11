@@ -1,4 +1,4 @@
-import type { Paginated } from '@rankly/shared';
+import type { Paginated } from '@voteverse/shared';
 
 export function paginate<T>(
   data: T[],

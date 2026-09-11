@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { publicApi } from '@/lib/api';
 import { SITE_URL } from '@/lib/config';
-import type { BattleCardView, Paginated, RankingCard } from '@rankly/shared';
+import type { BattleCardView, Paginated, RankingCard } from '@voteverse/shared';
 
 export const revalidate = 3600;
 

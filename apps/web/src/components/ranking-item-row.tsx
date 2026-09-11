@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import type { RankingItemView } from '@rankly/shared';
+import type { RankingItemView } from '@voteverse/shared';
+import { FEATURE_BOOST } from '@/lib/config';
 import { BoostControl } from './boost-control';
 import { VoteButtons } from './vote-buttons';
 
@@ -60,7 +61,9 @@ export function RankingItemRow({
               myVote: item.myVote,
             }}
           />
-          <BoostControl rankingItemId={item.id} initialSupport={item.support} />
+          {FEATURE_BOOST && (
+            <BoostControl rankingItemId={item.id} initialSupport={item.support} />
+          )}
         </div>
       </div>
     </div>

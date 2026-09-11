@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import type { Paginated, RankingCard } from '@rankly/shared';
+import type { Paginated, RankingCard } from '@voteverse/shared';
 import { publicApi } from '@/lib/api';
 import { RankingCard as Card } from '@/components/ranking-card';
 
 export const metadata: Metadata = {
   title: 'All rankings',
-  description: 'Browse every ranking on Rankly. Sort by trending, newest or most voted.',
+  description: 'Browse every ranking on Voteverse. Sort by trending, newest or most voted.',
 };
 
 export const revalidate = 30;

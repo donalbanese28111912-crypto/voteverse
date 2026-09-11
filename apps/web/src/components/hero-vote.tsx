@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import type { VoteResult } from '@rankly/shared';
+import type { VoteResult } from '@voteverse/shared';
 import { compact } from '@/lib/format';
 
 export function HeroVote(props: {

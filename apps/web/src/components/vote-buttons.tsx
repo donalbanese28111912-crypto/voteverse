@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import type { VoteResult } from '@rankly/shared';
+import type { VoteResult } from '@voteverse/shared';
 import { compact } from '@/lib/format';
 
 type VoteValue = 'UP' | 'DOWN';
@@ -171,7 +171,7 @@ export function VoteButtons({
         </div>
         {Math.abs(state.support) >= 0.005 && (
           <p className="mt-1 text-[11px] text-[var(--ink-3)]">
-            incl. Rankly Support {state.support > 0 ? '+' : ''}
+            incl. Voteverse Support {state.support > 0 ? '+' : ''}
             {(state.support * 100).toFixed(1)}%
           </p>
         )}
@@ -255,7 +255,7 @@ function ResultBar({
         <span>{compact(total)} people voted</span>
         {Math.abs(support) >= 0.005 && (
           <span>
-            Rankly Support {support > 0 ? '+' : ''}
+            Voteverse Support {support > 0 ? '+' : ''}
             {(support * 100).toFixed(1)}%
           </span>
         )}

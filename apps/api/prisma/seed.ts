@@ -48,7 +48,8 @@ async function main(): Promise<void> {
     prisma.entity.deleteMany(),
     prisma.category.deleteMany(),
   ]);
-  await prisma.user.deleteMany({ where: { email: { contains: '@seed.rankly' } } });
+  // matches both the current seed domain and any pre-rebrand leftovers
+  await prisma.user.deleteMany({ where: { email: { contains: '@seed.' } } });
 
   // ── categories ──────────────────────────────────────────────
   log.log('Categories…');
@@ -103,7 +104,7 @@ async function main(): Promise<void> {
     const ageDays = rand(1, 600);
     return {
       id: randomUUID(),
-      email: `voter${i}@seed.rankly.dev`,
+      email: `voter${i}@seed.voteverse.dev`,
       username: `voter_${i}`,
       displayName: `Voter ${i}`,
       passwordHash: sharedHash,
@@ -120,7 +121,7 @@ async function main(): Promise<void> {
   // a demo account you can log in with
   await prisma.user.create({
     data: {
-      email: 'demo@seed.rankly.dev',
+      email: 'demo@seed.voteverse.dev',
       username: 'demo',
       displayName: 'Demo User',
       passwordHash: sharedHash,
@@ -131,9 +132,9 @@ async function main(): Promise<void> {
   });
   await prisma.user.create({
     data: {
-      email: 'admin@seed.rankly.dev',
+      email: 'admin@seed.voteverse.dev',
       username: 'admin',
-      displayName: 'Rankly Admin',
+      displayName: 'Voteverse Admin',
       passwordHash: sharedHash,
       emailVerified: true,
       role: 'ADMIN',
@@ -227,45 +228,48 @@ async function main(): Promise<void> {
     log.log(`  ✔ ${rk.slug}`);
   }
 
-  // ── demo boosts (Rankly Support) ───────────────────────────────
-  // A handful of entries get paid Boost so the transparent "⚡ Sponsored"
-  // treatment is visible out of the box. This never touches communityScore —
-  // see StatsService.aggregate + @rankly/shared scoreItem().
-  log.log('Demo boosts…');
-  const demoBoosts: { rankingSlug: string; entitySlug: string; points: number; supporters: number }[] = [
-    { rankingSlug: 'best-ai-assistants-2026', entitySlug: 'grok', points: 1800, supporters: 6 },
-    { rankingSlug: 'best-instagram-stars-2026', entitySlug: 'kylie-jenner', points: 4200, supporters: 9 },
-    { rankingSlug: 'best-tiktokers-2026', entitySlug: 'addison-rae', points: 2600, supporters: 7 },
-    { rankingSlug: 'best-tech-companies-2026', entitySlug: 'tesla-inc', points: 3100, supporters: 8 },
-    { rankingSlug: 'best-cars-2026', entitySlug: 'ford-f150', points: 1400, supporters: 4 },
-  ];
-  const boostedRankingIds = new Set<string>();
-  for (const b of demoBoosts) {
-    const item = await prisma.rankingItem.findFirst({
-      where: { ranking: { slug: b.rankingSlug }, entity: { slug: b.entitySlug } },
-      select: { id: true, rankingId: true },
-    });
-    if (!item) {
-      log.warn(`  skip boost: ${b.rankingSlug}/${b.entitySlug} not found`);
-      continue;
+  // ── demo boosts (Voteverse Support) ───────────────────────────────
+  // Monetization is off for the initial public launch (product decision
+  // 2026-09-11) — skip seeding any Boost rows so nothing on the live site
+  // is paid-influenced. Set FEATURE_BOOST_ENABLED=true to bring this back;
+  // the transparent "⚡ Sponsored" treatment still works end to end.
+  if (process.env.FEATURE_BOOST_ENABLED === 'true') {
+    log.log('Demo boosts…');
+    const demoBoosts: { rankingSlug: string; entitySlug: string; points: number; supporters: number }[] = [
+      { rankingSlug: 'best-ai-assistants-2026', entitySlug: 'grok', points: 1800, supporters: 6 },
+      { rankingSlug: 'best-instagram-stars-2026', entitySlug: 'kylie-jenner', points: 4200, supporters: 9 },
+      { rankingSlug: 'best-tiktokers-2026', entitySlug: 'addison-rae', points: 2600, supporters: 7 },
+      { rankingSlug: 'best-tech-companies-2026', entitySlug: 'tesla-inc', points: 3100, supporters: 8 },
+      { rankingSlug: 'best-cars-2026', entitySlug: 'ford-f150', points: 1400, supporters: 4 },
+    ];
+    const boostedRankingIds = new Set<string>();
+    for (const b of demoBoosts) {
+      const item = await prisma.rankingItem.findFirst({
+        where: { ranking: { slug: b.rankingSlug }, entity: { slug: b.entitySlug } },
+        select: { id: true, rankingId: true },
+      });
+      if (!item) {
+        log.warn(`  skip boost: ${b.rankingSlug}/${b.entitySlug} not found`);
+        continue;
+      }
+      const boosters = shuffle(userIds).slice(0, b.supporters);
+      const per = Math.floor(b.points / boosters.length);
+      await prisma.boost.createMany({
+        data: boosters.map((boosterId) => ({
+          boosterId,
+          rankingItemId: item.id,
+          rankingId: item.rankingId,
+          points: per,
+          createdAt: new Date(now - rand(0, 48) * 3_600_000),
+        })),
+      });
+      boostedRankingIds.add(item.rankingId);
     }
-    const boosters = shuffle(userIds).slice(0, b.supporters);
-    const per = Math.floor(b.points / boosters.length);
-    await prisma.boost.createMany({
-      data: boosters.map((boosterId) => ({
-        boosterId,
-        rankingItemId: item.id,
-        rankingId: item.rankingId,
-        points: per,
-        createdAt: new Date(now - rand(0, 48) * 3_600_000),
-      })),
-    });
-    boostedRankingIds.add(item.rankingId);
+    for (const rankingId of boostedRankingIds) {
+      await stats.recomputeRanking(rankingId);
+    }
+    log.log(`  ✔ ${demoBoosts.length} demo boosts applied`);
   }
-  for (const rankingId of boostedRankingIds) {
-    await stats.recomputeRanking(rankingId);
-  }
-  log.log(`  ✔ ${demoBoosts.length} demo boosts applied`);
 
   // ── trending ────────────────────────────────────────────────
   log.log('Trending scores…');
@@ -280,7 +284,7 @@ async function main(): Promise<void> {
   log.log(
     `Done. users=${counts[0]} rankings=${counts[1]} items=${counts[2]} votes=${counts[3]}`,
   );
-  log.log('Login: demo@seed.rankly.dev / password123  (admin@seed.rankly.dev for admin)');
+  log.log('Login: demo@seed.voteverse.dev / password123  (admin@seed.voteverse.dev for admin)');
 
   await app.close();
 }

@@ -13,6 +13,14 @@ const envSchema = z.object({
 
   FREE_VOTES_PER_DAY: z.coerce.number().int().default(200),
   VOTE_RATE_LIMIT_PER_MIN: z.coerce.number().int().default(40),
+
+  // Monetization is switched off for the initial public launch (product
+  // decision 2026-09-11) — the ledger/Boost code stays intact so it can be
+  // re-enabled later without rebuilding it.
+  FEATURE_BOOST_ENABLED: z
+    .string()
+    .default('false')
+    .transform((v) => v === 'true'),
 });
 
 export type AppConfig = ReturnType<typeof loadConfig>;
@@ -39,6 +47,9 @@ export function loadConfig() {
     voting: {
       freeVotesPerDay: env.FREE_VOTES_PER_DAY,
       rateLimitPerMin: env.VOTE_RATE_LIMIT_PER_MIN,
+    },
+    features: {
+      boostEnabled: env.FEATURE_BOOST_ENABLED,
     },
   };
 }

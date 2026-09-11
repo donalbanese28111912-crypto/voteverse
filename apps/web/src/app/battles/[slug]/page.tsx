@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { BattleView } from '@rankly/shared';
+import type { BattleView } from '@voteverse/shared';
 import { api, ApiError } from '@/lib/api';
 import { SITE_URL } from '@/lib/config';
 import { BattleVote } from '@/components/battle-vote';
@@ -50,7 +50,7 @@ export default async function BattlePage({
       </div>
       <BattleVote battle={battle} />
       <p className="mt-4 rounded-lg bg-[var(--surface-2)] p-3 text-xs text-[var(--ink-3)]">
-        Percentages are Community Opinion only. Rankly Support (⚡) is always
+        Percentages are Community Opinion only. Voteverse Support (⚡) is always
         shown separately and never changes them.
       </p>
     </div>

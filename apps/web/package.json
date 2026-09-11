@@ -1,5 +1,5 @@
 {
-  "name": "@rankly/web",
+  "name": "@voteverse/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rankly/shared": "*",
+    "@voteverse/shared": "*",
     "next": "15.5.25",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

@@ -6,10 +6,10 @@ import { PUBLIC_API_V1 } from '@/lib/config';
 
 function sessionId(): string {
   try {
-    let id = localStorage.getItem('rankly_sid');
+    let id = localStorage.getItem('voteverse_sid');
     if (!id) {
       id = crypto.randomUUID();
-      localStorage.setItem('rankly_sid', id);
+      localStorage.setItem('voteverse_sid', id);
     }
     return id;
   } catch {

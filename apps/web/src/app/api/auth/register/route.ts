@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { registerSchema } from '@rankly/shared';
+import { registerSchema } from '@voteverse/shared';
 import { API_V1, COOKIE } from '@/lib/config';
 import { cookieOpts } from '@/lib/api';
 

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { RankingCard as RankingCardData } from '@rankly/shared';
+import type { RankingCard as RankingCardData } from '@voteverse/shared';
 import { RankingCard } from './ranking-card';
 
 export function FeedSection({

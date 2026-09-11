@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { castVoteSchema } from '@rankly/shared';
+import { castVoteSchema } from '@voteverse/shared';
 import { forward } from '@/lib/bff';
 
 export async function POST(req: NextRequest) {

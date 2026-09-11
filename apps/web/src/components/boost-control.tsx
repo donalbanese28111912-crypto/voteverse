@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import type { BoostResult } from '@rankly/shared';
+import type { BoostResult } from '@voteverse/shared';
 
 const PRESETS = [10, 50, 200];
 
@@ -55,7 +55,7 @@ export function BoostControl({
           className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold ${
             justBoosted ? 'animate-pop' : ''
           } bg-[var(--surface-2)] text-[var(--ink-2)]`}
-          title="Paid Rankly Support — always separate from the Community Score"
+          title="Paid Voteverse Support — always separate from the Community Score"
         >
           ⚡ Sponsored {support > 0 ? '+' : ''}
           {(support * 100).toFixed(1)}%
