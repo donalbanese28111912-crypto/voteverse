@@ -11,6 +11,7 @@ import { loadConfig } from './config/configuration';
 import { EntitiesModule } from './entities/entities.module';
 import { FeedModule } from './feed/feed.module';
 import { HealthModule } from './health/health.module';
+import { PointsModule } from './points/points.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { RankingsModule } from './rankings/rankings.module';
 import { SearchModule } from './search/search.module';
@@ -35,6 +36,7 @@ import { VotesModule } from './votes/votes.module';
     EntitiesModule,
     RankingsModule,
     VotesModule,
+    PointsModule,
     StatsModule,
     TrendingModule,
     SearchModule,

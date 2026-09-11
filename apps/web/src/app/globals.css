@@ -51,7 +51,7 @@
 @layer base {
   html,
   body {
-    background: var(--bg);
+    background: transparent;
     color: var(--ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -90,4 +90,112 @@
 }
 .animate-pop {
   animation: rankly-pop 0.28s ease-out;
+}
+
+/* ── Ambient animated backdrop ─────────────────────────────────── */
+.rankly-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
+  pointer-events: none;
+}
+
+.rankly-bg .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.55;
+  will-change: transform;
+  mix-blend-mode: normal;
+}
+
+:root:not([data-theme='dark']) .rankly-bg .orb {
+  opacity: 0.4;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .rankly-bg .orb {
+    opacity: 0.55;
+  }
+}
+:root[data-theme='dark'] .rankly-bg .orb {
+  opacity: 0.55;
+}
+
+.orb-a {
+  top: -12%;
+  left: -8%;
+  width: 46vw;
+  height: 46vw;
+  background: radial-gradient(circle at 35% 35%, #22d3ee, #6366f1 65%, transparent 75%);
+  animation: drift-a 42s ease-in-out infinite;
+}
+.orb-b {
+  top: 8%;
+  right: -12%;
+  width: 38vw;
+  height: 38vw;
+  background: radial-gradient(circle at 40% 40%, #34d399, #16a34a 60%, transparent 75%);
+  animation: drift-b 50s ease-in-out infinite;
+}
+.orb-c {
+  bottom: -14%;
+  left: 10%;
+  width: 42vw;
+  height: 42vw;
+  background: radial-gradient(circle at 45% 45%, #f472b6, #db2777 60%, transparent 75%);
+  animation: drift-c 55s ease-in-out infinite;
+}
+.orb-d {
+  bottom: 5%;
+  right: 5%;
+  width: 30vw;
+  height: 30vw;
+  background: radial-gradient(circle at 40% 40%, #fbbf24, #f97316 60%, transparent 75%);
+  animation: drift-d 38s ease-in-out infinite;
+}
+.orb-e {
+  top: 38%;
+  left: 42%;
+  width: 24vw;
+  height: 24vw;
+  background: radial-gradient(circle at 50% 50%, #a78bfa, #7c3aed 60%, transparent 75%);
+  animation: drift-e 46s ease-in-out infinite;
+}
+
+.rankly-bg .grain {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: saturate(1.05);
+}
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6vw, 8vh) scale(1.08); }
+  66% { transform: translate(-4vw, 4vh) scale(0.95); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-7vw, 6vh) scale(1.1); }
+  66% { transform: translate(3vw, -5vh) scale(0.92); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(5vw, -6vh) scale(1.06); }
+  66% { transform: translate(-6vw, -3vh) scale(0.96); }
+}
+@keyframes drift-d {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5vw, -7vh) scale(1.12); }
+}
+@keyframes drift-e {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-46%, -55%) scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rankly-bg .orb {
+    animation: none !important;
+  }
 }

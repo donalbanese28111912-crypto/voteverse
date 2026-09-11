@@ -227,6 +227,46 @@ async function main(): Promise<void> {
     log.log(`  ✔ ${rk.slug}`);
   }
 
+  // ── demo boosts (Rankly Support) ───────────────────────────────
+  // A handful of entries get paid Boost so the transparent "⚡ Sponsored"
+  // treatment is visible out of the box. This never touches communityScore —
+  // see StatsService.aggregate + @rankly/shared scoreItem().
+  log.log('Demo boosts…');
+  const demoBoosts: { rankingSlug: string; entitySlug: string; points: number; supporters: number }[] = [
+    { rankingSlug: 'best-ai-assistants-2026', entitySlug: 'grok', points: 1800, supporters: 6 },
+    { rankingSlug: 'best-instagram-stars-2026', entitySlug: 'kylie-jenner', points: 4200, supporters: 9 },
+    { rankingSlug: 'best-tiktokers-2026', entitySlug: 'addison-rae', points: 2600, supporters: 7 },
+    { rankingSlug: 'best-tech-companies-2026', entitySlug: 'tesla-inc', points: 3100, supporters: 8 },
+    { rankingSlug: 'best-cars-2026', entitySlug: 'ford-f150', points: 1400, supporters: 4 },
+  ];
+  const boostedRankingIds = new Set<string>();
+  for (const b of demoBoosts) {
+    const item = await prisma.rankingItem.findFirst({
+      where: { ranking: { slug: b.rankingSlug }, entity: { slug: b.entitySlug } },
+      select: { id: true, rankingId: true },
+    });
+    if (!item) {
+      log.warn(`  skip boost: ${b.rankingSlug}/${b.entitySlug} not found`);
+      continue;
+    }
+    const boosters = shuffle(userIds).slice(0, b.supporters);
+    const per = Math.floor(b.points / boosters.length);
+    await prisma.boost.createMany({
+      data: boosters.map((boosterId) => ({
+        boosterId,
+        rankingItemId: item.id,
+        rankingId: item.rankingId,
+        points: per,
+        createdAt: new Date(now - rand(0, 48) * 3_600_000),
+      })),
+    });
+    boostedRankingIds.add(item.rankingId);
+  }
+  for (const rankingId of boostedRankingIds) {
+    await stats.recomputeRanking(rankingId);
+  }
+  log.log(`  ✔ ${demoBoosts.length} demo boosts applied`);
+
   // ── trending ────────────────────────────────────────────────
   log.log('Trending scores…');
   await trending.recomputeAll();

@@ -79,8 +79,11 @@ export const DEFAULT_MODEL_CONFIG: RankingModelConfig = {
   z: 1.96,
   priorWeight: 12,
   priorMean: 0.62,
-  maxSupportInfluence: 0.05,
-  minSupportersForInfluence: 5,
+  // Rankly Support can meaningfully move a rank position (up to +/-40pp of
+  // rank score) but NEVER touches communityScore — the two are always shown
+  // separately, and every boosted item is labeled "Sponsored" in the UI.
+  maxSupportInfluence: 0.4,
+  minSupportersForInfluence: 1,
   fullConfidenceVoters: 40,
 };
 

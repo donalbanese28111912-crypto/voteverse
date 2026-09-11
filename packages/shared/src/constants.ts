@@ -15,13 +15,14 @@ export type RankingType = (typeof RANKING_TYPES)[number];
 export const MODERATION_LEVELS = ['STANDARD', 'ELEVATED', 'STRICT'] as const;
 export type ModerationLevel = (typeof MODERATION_LEVELS)[number];
 
-/** Categories where paid Rankly Points support is always disabled (spec §4). */
-export const PAID_SUPPORT_BLOCKED_CATEGORY_SLUGS = [
-  'politics',
-  'news',
-  'health',
-  'finance',
-] as const;
+/**
+ * Categories where paid Rankly Points support is blocked by platform policy.
+ * Currently empty — the product decision is that Boost is available
+ * everywhere, always transparently labeled and capped (see
+ * @rankly/shared scoreItem()). Kept as a lever: set per-category via
+ * Category.paidSupportEnabled in the DB without a code change.
+ */
+export const PAID_SUPPORT_BLOCKED_CATEGORY_SLUGS: readonly string[] = [];
 
 export const DEFAULT_PAGE_SIZE = 20;
 export const MAX_PAGE_SIZE = 100;

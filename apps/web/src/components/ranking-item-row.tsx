@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import type { RankingItemView } from '@rankly/shared';
+import { BoostControl } from './boost-control';
 import { VoteButtons } from './vote-buttons';
 
 const TREND_BADGE: Record<string, { label: string; cls: string }> = {
@@ -59,6 +60,7 @@ export function RankingItemRow({
               myVote: item.myVote,
             }}
           />
+          <BoostControl rankingItemId={item.id} initialSupport={item.support} />
         </div>
       </div>
     </div>

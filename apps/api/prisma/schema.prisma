@@ -53,6 +53,14 @@ enum TimeWindow {
   LIVE
 }
 
+enum PointsTransactionType {
+  PURCHASE // wallet top-up (dev/test-mode — no real payment processor wired yet)
+  BOOST_SPEND // points spent boosting a ranking item
+  REFUND
+  ADMIN_ADJUST
+  SIGNUP_BONUS
+}
+
 // ─────────────────────────────────────── users & auth
 
 model User {
@@ -79,8 +87,11 @@ model User {
   refreshTokens RefreshToken[]
   votes         Vote[]
   voteEvents    VoteEvent[]
-  rankings      Ranking[]      @relation("RankingCreator")
+  rankings      Ranking[]           @relation("RankingCreator")
   auditLogs     AuditLog[]
+  wallet        PointsWallet?
+  transactions  PointsTransaction[]
+  boosts        Boost[]
 
   @@index([reputation])
   @@map("users")
@@ -208,8 +219,9 @@ model RankingItem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  votes Vote[]
-  stats RankingItemStat[]
+  votes  Vote[]
+  stats  RankingItemStat[]
+  boosts Boost[]
 
   @@unique([rankingId, entityId])
   @@index([rankingId])
@@ -278,7 +290,8 @@ model RankingItemStat {
   distinctVoters Int   @default(0)
   suspicionRatio Float @default(0)
 
-  // paid support (milestone 2) — kept at 0 for now, surfaced separately by design
+  // paid support — summed from Boost rows, always kept separate from
+  // communityScore/rankScore inputs above and surfaced transparently
   paidSupportUnits  Float @default(0)
   distinctSupporters Int  @default(0)
 
@@ -294,6 +307,63 @@ model RankingItemStat {
   @@unique([rankingItemId, window])
   @@index([window, rankScore(sort: Desc)])
   @@map("ranking_item_stats")
+}
+
+// ─────────────────────────────────────── Rankly Points & Boost
+
+// Every user has exactly one wallet. Balance is a cached mirror of the
+// PointsTransaction ledger below — it is never written directly from a
+// client, only by PointsService inside a DB transaction alongside a ledger row.
+model PointsWallet {
+  id        String   @id @default(uuid()) @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique @db.Uuid
+  balance   Int      @default(0)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@map("points_wallets")
+}
+
+// Immutable, append-only ledger. Every balance change in the platform has a
+// row here; `balanceAfter` lets the wallet balance be recomputed/audited
+// independently of the cached PointsWallet.balance.
+model PointsTransaction {
+  id            String                @id @default(uuid()) @db.Uuid
+  user          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String                @db.Uuid
+  type          PointsTransactionType
+  amount        Int // signed: positive credits, negative debits
+  balanceAfter  Int
+  // for PURCHASE (dev/test-mode — no real payment processor wired yet)
+  packageId     String?
+  priceCents    Int?
+  currency      String?
+  // for BOOST_SPEND
+  boostId       String?               @db.Uuid
+  metadata      Json?
+  createdAt     DateTime              @default(now())
+
+  @@index([userId, createdAt])
+  @@map("points_transactions")
+}
+
+// One row per boost purchase. Always additive to a target item's UP support —
+// never mixed into vote counts, always shown to visitors as "Rankly Support"
+// / "Sponsored", and always capped (see @rankly/shared scoreItem()).
+model Boost {
+  id            String      @id @default(uuid()) @db.Uuid
+  booster       User        @relation(fields: [boosterId], references: [id], onDelete: Cascade)
+  boosterId     String      @db.Uuid
+  rankingItem   RankingItem @relation(fields: [rankingItemId], references: [id], onDelete: Cascade)
+  rankingItemId String      @db.Uuid
+  rankingId     String      @db.Uuid
+  points        Int
+  createdAt     DateTime    @default(now())
+
+  @@index([rankingItemId, createdAt])
+  @@index([boosterId, createdAt])
+  @@map("boosts")
 }
 
 // ─────────────────────────────────────── moderation & audit

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import { SiteHeader } from '@/components/site-header';
 import { Analytics } from '@/components/analytics';
+import { AnimatedBackground } from '@/components/animated-background';
 import { SITE_URL } from '@/lib/config';
 import './globals.css';
 
@@ -37,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <AnimatedBackground />
         <Suspense fallback={<div className="h-14 border-b border-[var(--border)]" />}>
           <SiteHeader />
         </Suspense>

@@ -121,6 +121,19 @@ export class StatsService {
       select: { updatedAt: true },
     });
 
+    const boostWhere: Prisma.BoostWhereInput = {
+      rankingItemId,
+      ...(start ? { createdAt: { gte: start } } : {}),
+    };
+    const [boostSum, boostSupporters] = await Promise.all([
+      this.prisma.boost.aggregate({ where: boostWhere, _sum: { points: true } }),
+      this.prisma.boost.findMany({
+        where: boostWhere,
+        distinct: ['boosterId'],
+        select: { boosterId: true },
+      }),
+    ]);
+
     const up = byValue.find((r) => r.value === 'UP');
     const down = byValue.find((r) => r.value === 'DOWN');
 
@@ -139,8 +152,8 @@ export class StatsService {
       weightedUp: up?._sum.weight ?? 0,
       weightedDown: down?._sum.weight ?? 0,
       distinctVoters: total, // one vote per user per item
-      paidSupportUnits: 0, // milestone 2
-      distinctSupporters: 0,
+      paidSupportUnits: boostSum._sum.points ?? 0,
+      distinctSupporters: boostSupporters.length,
       suspicionRatio,
       lastVoteAt: last?.updatedAt.getTime() ?? null,
       firstVoteAt: firstRow?.updatedAt.getTime() ?? null,

@@ -16,6 +16,7 @@ import type {
 import type { User } from '@prisma/client';
 import type { AppConfig } from '../config/configuration';
 import { PrismaService } from '../prisma/prisma.service';
+import { PointsService } from '../points/points.service';
 
 function sha256(input: string): string {
   return createHash('sha256').update(input).digest('hex');
@@ -28,6 +29,7 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
+    private readonly points: PointsService,
     config: ConfigService<{ app: AppConfig }, true>,
   ) {
     this.cfg = config.get('app', { infer: true });
@@ -53,6 +55,7 @@ export class AuthService {
       },
     });
 
+    await this.points.grantSignupBonus(user.id);
     const tokens = await this.issueTokens(user, null, null);
     return { user: toPublicUser(user), tokens };
   }
