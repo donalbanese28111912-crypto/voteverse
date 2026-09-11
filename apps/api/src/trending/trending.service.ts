@@ -66,7 +66,7 @@ export class TrendingService {
 
   async top(limit = 20) {
     const rows = await this.prisma.ranking.findMany({
-      where: { status: 'PUBLISHED', trendingScore: { gt: 0 } },
+      where: { status: 'PUBLISHED', trendingScore: { gt: 0 }, type: { not: 'BATTLE' } },
       orderBy: { trendingScore: 'desc' },
       take: limit,
       include: {

@@ -4,6 +4,7 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { AuthModule } from './auth/auth.module';
+import { BattlesModule } from './battles/battles.module';
 import { CategoriesModule } from './categories/categories.module';
 import { AllExceptionsFilter } from './common/http-exception.filter';
 import { JwtAuthGuard, RolesGuard } from './common/guards';
@@ -35,6 +36,7 @@ import { VotesModule } from './votes/votes.module';
     CategoriesModule,
     EntitiesModule,
     RankingsModule,
+    BattlesModule,
     VotesModule,
     PointsModule,
     StatsModule,

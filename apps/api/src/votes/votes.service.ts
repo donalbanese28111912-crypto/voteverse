@@ -30,7 +30,11 @@ export class VotesService {
   ): Promise<VoteResult> {
     const item = await this.prisma.rankingItem.findUnique({
       where: { id: input.rankingItemId },
-      select: { id: true, rankingId: true, ranking: { select: { status: true } } },
+      select: {
+        id: true,
+        rankingId: true,
+        ranking: { select: { status: true, type: true } },
+      },
     });
     if (!item) throw new NotFoundException('Ranking item not found');
     if (item.ranking.status !== 'PUBLISHED') {
@@ -145,6 +149,37 @@ export class VotesService {
         where: { id: userId },
         data: { lifetimeVotes: { increment: 1 }, lastActiveAt: new Date() },
       });
+    }
+
+    // Battles/This-or-That are exclusive: picking a side retracts any
+    // standing pick on the other side of the same ranking.
+    if (item.ranking.type === 'BATTLE' && resultingValue === 'UP') {
+      const siblings = await this.prisma.vote.findMany({
+        where: {
+          userId,
+          rankingId: item.rankingId,
+          rankingItemId: { not: item.id },
+          deletedAt: null,
+        },
+        select: { id: true, rankingItemId: true },
+      });
+      for (const sibling of siblings) {
+        await this.prisma.vote.update({
+          where: { id: sibling.id },
+          data: { deletedAt: new Date() },
+        });
+        await this.prisma.voteEvent.create({
+          data: {
+            userId,
+            rankingItemId: sibling.rankingItemId,
+            rankingId: item.rankingId,
+            action: 'retract',
+            value: null,
+            weight,
+          },
+        });
+        await this.stats.recomputeItem(sibling.rankingItemId);
+      }
     }
 
     await this.stats.recomputeItem(item.id);

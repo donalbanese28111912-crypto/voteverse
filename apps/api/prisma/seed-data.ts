@@ -151,6 +151,11 @@ export const CATEGORIES: CategorySeed[] = [
     icon: '🔬',
     children: [{ slug: 'space', name: 'Space', icon: '🚀' }],
   },
+  {
+    slug: 'fun',
+    name: 'This or That',
+    icon: '🎲',
+  },
 ];
 
 export interface EntitySeed {
@@ -298,6 +303,17 @@ export const ENTITIES: EntitySeed[] = [
   { slug: 'league-of-legends', name: 'League of Legends', type: 'game' },
   { slug: 'valorant', name: 'Valorant', type: 'game' },
   { slug: 'gta-vi', name: 'GTA VI', type: 'game' },
+  { slug: 'playstation-5', name: 'PlayStation 5', type: 'console' },
+  { slug: 'xbox-series-x', name: 'Xbox Series X', type: 'console' },
+  // this-or-that
+  { slug: 'beach', name: 'Beach 🏖️', type: 'concept' },
+  { slug: 'mountains', name: 'Mountains 🏔️', type: 'concept' },
+  { slug: 'coffee', name: 'Coffee ☕', type: 'concept' },
+  { slug: 'tea', name: 'Tea 🍵', type: 'concept' },
+  { slug: 'dogs', name: 'Dogs 🐶', type: 'concept' },
+  { slug: 'cats', name: 'Cats 🐱', type: 'concept' },
+  { slug: 'summer', name: 'Summer ☀️', type: 'concept' },
+  { slug: 'winter', name: 'Winter ❄️', type: 'concept' },
 ];
 
 export interface RankingSeed {
@@ -305,7 +321,7 @@ export interface RankingSeed {
   title: string;
   description: string;
   categorySlug: string;
-  type: 'LEADERBOARD' | 'BINARY';
+  type: 'LEADERBOARD' | 'BINARY' | 'BATTLE';
   /** entity slug -> target community up-rate (0..1) used to simulate votes */
   items: { entitySlug?: string; label?: string; upRate: number; volume: number }[];
 }
@@ -717,5 +733,117 @@ export const RANKINGS: RankingSeed[] = [
     categorySlug: 'electric-cars',
     type: 'BINARY',
     items: [{ label: 'Yes, I would', upRate: 0.56, volume: 33700 }],
+  },
+
+  // ── Battles — pick a side ──
+  {
+    slug: 'iphone-vs-samsung',
+    title: 'iPhone vs Samsung',
+    description: 'The all-time phone rivalry. Pick a side.',
+    categorySlug: 'smartphones',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'iphone-17-pro', upRate: 0.9, volume: 9800 },
+      { entitySlug: 'samsung-galaxy-s26', upRate: 0.88, volume: 6600 },
+    ],
+  },
+  {
+    slug: 'chatgpt-vs-claude',
+    title: 'ChatGPT vs Claude',
+    description: 'Which assistant do you actually reach for?',
+    categorySlug: 'ai-assistants',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'chatgpt', upRate: 0.9, volume: 14200 },
+      { entitySlug: 'claude', upRate: 0.9, volume: 15600 },
+    ],
+  },
+  {
+    slug: 'paris-vs-london',
+    title: 'Paris vs London',
+    description: 'Two capitals, one winner.',
+    categorySlug: 'cities',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'paris', upRate: 0.9, volume: 8100 },
+      { entitySlug: 'london', upRate: 0.9, volume: 8900 },
+    ],
+  },
+  {
+    slug: 'messi-vs-ronaldo',
+    title: 'Messi vs Ronaldo',
+    description: 'The debate that will never die.',
+    categorySlug: 'football',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'messi', upRate: 0.9, volume: 24800 },
+      { entitySlug: 'ronaldo', upRate: 0.9, volume: 23100 },
+    ],
+  },
+  {
+    slug: 'bitcoin-vs-ethereum',
+    title: 'Bitcoin vs Ethereum',
+    description: 'Community sentiment only — not investment advice.',
+    categorySlug: 'coins',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'bitcoin', upRate: 0.9, volume: 10200 },
+      { entitySlug: 'ethereum', upRate: 0.9, volume: 7400 },
+    ],
+  },
+  {
+    slug: 'playstation-vs-xbox',
+    title: 'PlayStation vs Xbox',
+    description: 'Console war, community edition.',
+    categorySlug: 'gaming',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'playstation-5', upRate: 0.9, volume: 11400 },
+      { entitySlug: 'xbox-series-x', upRate: 0.9, volume: 7200 },
+    ],
+  },
+  {
+    slug: 'beach-vs-mountains',
+    title: 'Beach vs Mountains',
+    description: 'This or that.',
+    categorySlug: 'fun',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'beach', upRate: 0.9, volume: 12600 },
+      { entitySlug: 'mountains', upRate: 0.9, volume: 9800 },
+    ],
+  },
+  {
+    slug: 'coffee-vs-tea',
+    title: 'Coffee vs Tea',
+    description: 'This or that.',
+    categorySlug: 'fun',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'coffee', upRate: 0.9, volume: 15100 },
+      { entitySlug: 'tea', upRate: 0.9, volume: 10900 },
+    ],
+  },
+  {
+    slug: 'dogs-vs-cats',
+    title: 'Dogs vs Cats',
+    description: 'This or that.',
+    categorySlug: 'fun',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'dogs', upRate: 0.9, volume: 16800 },
+      { entitySlug: 'cats', upRate: 0.9, volume: 13200 },
+    ],
+  },
+  {
+    slug: 'summer-vs-winter',
+    title: 'Summer vs Winter',
+    description: 'This or that.',
+    categorySlug: 'fun',
+    type: 'BATTLE',
+    items: [
+      { entitySlug: 'summer', upRate: 0.9, volume: 11700 },
+      { entitySlug: 'winter', upRate: 0.9, volume: 8300 },
+    ],
   },
 ];

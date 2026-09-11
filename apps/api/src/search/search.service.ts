@@ -26,6 +26,7 @@ export class SearchService {
           slug: true,
           title: true,
           totalVotes: true,
+          type: true,
           category: { select: { slug: true, name: true } },
         },
       }),
@@ -49,6 +50,7 @@ export class SearchService {
         title: r.title,
         totalVotes: r.totalVotes,
         category: r.category,
+        isBattle: r.type === 'BATTLE',
       })),
       entities: entities.map((e) => ({
         type: 'entity' as const,

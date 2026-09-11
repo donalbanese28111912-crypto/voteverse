@@ -53,7 +53,11 @@ export class RankingsService {
             ],
           }
         : {}),
-      ...(params.type ? { type: params.type as Prisma.EnumRankingTypeFilter['equals'] } : {}),
+      // Battles have their own dedicated section (/battles) — keep them out
+      // of the general browse list unless explicitly requested.
+      ...(params.type
+        ? { type: params.type as Prisma.EnumRankingTypeFilter['equals'] }
+        : { type: { not: 'BATTLE' } }),
     };
 
     const orderBy: Prisma.RankingOrderByWithRelationInput =

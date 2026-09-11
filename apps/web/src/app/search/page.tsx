@@ -5,7 +5,13 @@ import { compact } from '@/lib/format';
 
 interface SearchResults {
   query: string;
-  rankings: { slug: string; title: string; totalVotes: number; category: { name: string } }[];
+  rankings: {
+    slug: string;
+    title: string;
+    totalVotes: number;
+    category: { name: string };
+    isBattle: boolean;
+  }[];
   entities: { slug: string; name: string; entityType: string | null }[];
   categories: { slug: string; name: string; icon: string | null }[];
 }
@@ -78,7 +84,7 @@ export default async function SearchPage({
             {results.rankings.map((r) => (
               <li key={r.slug}>
                 <Link
-                  href={`/rankings/${r.slug}`}
+                  href={r.isBattle ? `/battles/${r.slug}` : `/rankings/${r.slug}`}
                   className="card flex items-center justify-between p-3 hover:border-[var(--ink-3)]"
                 >
                   <span>

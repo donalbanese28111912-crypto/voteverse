@@ -6,6 +6,7 @@ import { UserMenu } from './user-menu';
 
 const NAV = [
   { href: '/rankings', label: 'Rankings' },
+  { href: '/battles', label: 'Battles' },
   { href: '/trending', label: 'Trending' },
   { href: '/categories', label: 'Categories' },
   { href: '/vote', label: 'Vote' },

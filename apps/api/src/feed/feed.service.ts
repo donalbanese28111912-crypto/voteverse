@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import type { Prisma } from '@prisma/client';
 import type { RankingCard } from '@rankly/shared';
+import { BattlesService } from '../battles/battles.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { TrendingService } from '../trending/trending.service';
 
@@ -13,14 +15,16 @@ export class FeedService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly trending: TrendingService,
+    private readonly battles: BattlesService,
   ) {}
 
   async home(userId: string | null) {
-    const [trending, popular, fresh, hero] = await Promise.all([
+    const [trending, popular, fresh, hero, battleCards] = await Promise.all([
       this.trending.top(8),
       this.cards({ orderBy: { totalVotes: 'desc' }, take: 8 }),
       this.cards({ orderBy: { createdAt: 'desc' }, take: 8 }),
       this.pickHero(userId),
+      this.battles.list(1, 4).then((p) => p.data),
     ]);
 
     const forYou = userId
@@ -50,6 +54,7 @@ export class FeedService {
       forYou,
       popular,
       fresh,
+      battles: battleCards,
       sections: sections.filter((s) => s.rankings.length > 0),
     };
   }
@@ -147,7 +152,7 @@ export class FeedService {
     const candidates = await this.prisma.rankingItem.findMany({
       where: {
         id: { notIn: voted.length ? voted : ['00000000-0000-0000-0000-000000000000'] },
-        ranking: { status: 'PUBLISHED' },
+        ranking: { status: 'PUBLISHED', type: { not: 'BATTLE' } },
       },
       orderBy: { ranking: { trendingScore: 'desc' } },
       take: 40,
@@ -180,12 +185,18 @@ export class FeedService {
   }
 
   private async cards(args: {
-    where?: object;
+    where?: Prisma.RankingWhereInput;
     orderBy: object;
     take: number;
   }): Promise<RankingCard[]> {
+    // Battles have their own section (/battles, BattlesRow) — never surface
+    // them through the generic leaderboard/opinion card feed.
+    const where: Prisma.RankingWhereInput = {
+      ...(args.where ?? { status: 'PUBLISHED' }),
+      type: { not: 'BATTLE' },
+    };
     const rows = await this.prisma.ranking.findMany({
-      where: args.where ?? { status: 'PUBLISHED' },
+      where,
       orderBy: args.orderBy as never,
       take: args.take,
       include: CARD_INCLUDE,

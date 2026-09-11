@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { PUBLIC_API_V1 } from '@/lib/config';
 
 interface Results {
-  rankings: { slug: string; title: string }[];
+  rankings: { slug: string; title: string; isBattle: boolean }[];
   entities: { slug: string; name: string }[];
   categories: { slug: string; name: string }[];
 }
@@ -79,7 +79,7 @@ export function HeaderSearch() {
             <button
               key={`r-${r.slug}`}
               onClick={() => {
-                router.push(`/rankings/${r.slug}`);
+                router.push(r.isBattle ? `/battles/${r.slug}` : `/rankings/${r.slug}`);
                 setOpen(false);
               }}
               className="block w-full truncate px-3 py-2 text-left text-sm hover:bg-[var(--surface-2)]"

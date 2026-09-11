@@ -3,7 +3,8 @@ import { publicApi } from '@/lib/api';
 import { getViewer } from '@/lib/session';
 import { FeedSection } from '@/components/feed-section';
 import { HeroVote } from '@/components/hero-vote';
-import type { RankingCard } from '@rankly/shared';
+import { BattlesRow } from '@/components/battles-row';
+import type { BattleCardView, RankingCard } from '@rankly/shared';
 
 interface HomeFeed {
   hero: {
@@ -21,6 +22,7 @@ interface HomeFeed {
   forYou: RankingCard[];
   popular: RankingCard[];
   fresh: RankingCard[];
+  battles: BattleCardView[];
   sections: { slug: string; rankings: RankingCard[] }[];
 }
 
@@ -78,6 +80,8 @@ export default async function HomePage() {
           🎲 Start the vote loop
         </Link>
       </div>
+
+      <BattlesRow battles={feed.battles} />
 
       <FeedSection
         title="🔥 Trending now"
