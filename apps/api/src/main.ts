@@ -16,6 +16,11 @@ async function bootstrap(): Promise<void> {
   const config = app.get(ConfigService<{ app: AppConfig }, true>);
   const cfg = config.get('app', { infer: true });
 
+  if (cfg.isProd) {
+    // Behind Railway's reverse proxy — trust X-Forwarded-For so req.ip is
+    // the real client IP (used for vote rate-limiting and audit context).
+    app.getHttpAdapter().getInstance().set('trust proxy', 1);
+  }
   app.use(helmet());
   app.use(cookieParser());
   app.setGlobalPrefix('api');

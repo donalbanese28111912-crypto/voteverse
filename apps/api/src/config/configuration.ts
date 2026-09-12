@@ -3,6 +3,9 @@ import { z } from 'zod';
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   DATABASE_URL: z.string().url(),
+  // Railway (and most PaaS) inject PORT and expect the app to bind to it;
+  // API_PORT is the local-dev override.
+  PORT: z.coerce.number().int().optional(),
   API_PORT: z.coerce.number().int().default(4000),
   CORS_ORIGINS: z.string().default('http://localhost:3000'),
 
@@ -36,7 +39,7 @@ export function loadConfig() {
   return {
     nodeEnv: env.NODE_ENV,
     isProd: env.NODE_ENV === 'production',
-    port: env.API_PORT,
+    port: env.PORT ?? env.API_PORT,
     corsOrigins: env.CORS_ORIGINS.split(',').map((s) => s.trim()).filter(Boolean),
     jwt: {
       accessSecret: env.JWT_ACCESS_SECRET,
