@@ -314,7 +314,7 @@
 
 <div class="masthead">
   <div class="wrap">
-    <div class="eyebrow">Statusbericht · 11. September 2026</div>
+    <div class="eyebrow">Statusbericht · 12. September 2026</div>
     <div class="wordmark">
       <span class="bars"><span></span><span></span><span></span></span>
       <h1>Voteverse</h1>
@@ -358,7 +358,7 @@
       <div class="prog-row"><div class="prog-name">Voting-Kern</div><div class="prog-bar"><div class="fill" style="width:100%"></div></div><div class="prog-pct">fertig</div></div>
       <div class="prog-row"><div class="prog-name">Ranking-Algorithmus</div><div class="prog-bar"><div class="fill" style="width:100%"></div></div><div class="prog-pct">fertig</div></div>
       <div class="prog-row"><div class="prog-name">Kategorien &amp; Content</div><div class="prog-bar"><div class="fill" style="width:90%"></div></div><div class="prog-pct">breit</div></div>
-      <div class="prog-row"><div class="prog-name">Voteverse Points / Boost</div><div class="prog-bar"><div class="fill amber" style="width:70%"></div></div><div class="prog-pct">Dev-Modus</div></div>
+      <div class="prog-row"><div class="prog-name">Voteverse Points / Boost</div><div class="prog-bar"><div class="fill amber" style="width:70%"></div></div><div class="prog-pct">gebaut, aus</div></div>
       <div class="prog-row"><div class="prog-name">Battles / This or That</div><div class="prog-bar"><div class="fill" style="width:100%"></div></div><div class="prog-pct">fertig</div></div>
       <div class="prog-row"><div class="prog-name">Suche, Trending, SEO</div><div class="prog-bar"><div class="fill" style="width:80%"></div></div><div class="prog-pct">solide</div></div>
       <div class="prog-row"><div class="prog-name">Accounts &amp; Auth</div><div class="prog-bar"><div class="fill" style="width:100%"></div></div><div class="prog-pct">fertig</div></div>
@@ -367,6 +367,7 @@
       <div class="prog-row"><div class="prog-name">Gamification (XP/Badges)</div><div class="prog-bar"><div class="fill" style="width:0%"></div></div><div class="prog-pct">offen</div></div>
       <div class="prog-row"><div class="prog-name">Admin-Dashboard</div><div class="prog-bar"><div class="fill" style="width:0%"></div></div><div class="prog-pct">offen</div></div>
       <div class="prog-row"><div class="prog-name">Moderation, i18n, Apps</div><div class="prog-bar"><div class="fill" style="width:0%"></div></div><div class="prog-pct">offen</div></div>
+      <div class="prog-row"><div class="prog-name">Impressum / rechtliche Seiten</div><div class="prog-bar"><div class="fill amber" style="width:20%"></div></div><div class="prog-pct">wartet auf Angaben</div></div>
     </div>
   </section>
 
@@ -416,6 +417,23 @@
         <div class="date">11.09.</div>
         <div><div class="what">Battles sind exklusiv</div><div class="why">Eine Seite wählen zieht die andere automatisch zurück — end-to-end verifiziert, keine Doppelzählung.</div></div>
       </div>
+      <div class="drow">
+        <div class="date">12.09.</div>
+        <div><div class="what">Umbenennung Rankly → Voteverse</div><div class="why">Vollständig durchgezogen: npm-Pakete, Datenbankrolle &amp; -namen, Cookies, UI, Seed-Domains, Doku. Nur der lokale Ordnerpfad blieb unangetastet (siehe unten).</div></div>
+      </div>
+      <div class="drow">
+        <div class="date">12.09.</div>
+        <div>
+          <div class="what">Monetarisierung für den Launch abgeschaltet</div>
+          <div class="why">Nutzerentscheidung: erst veröffentlichen, ohne etwas zu verdienen. Bezahlung kommt zurück, sobald Holding-UG und operative UG stehen (Zielmarke 01.01.2027).</div>
+          <div class="vs">
+            <span class="side a">Boost-Code</span>
+            <span class="mid">bleibt vollständig erhalten</span>
+            <span class="side b">nur per Flag aus</span>
+          </div>
+          <div class="why"><code>FEATURE_BOOST_ENABLED=false</code> (API) / <code>NEXT_PUBLIC_FEATURE_BOOST=false</code> (Web) — Ranking-Einfluss wird serverseitig hart auf 0 gezwungen, nicht nur die Oberfläche versteckt, damit auch bestehende Boost-Daten nie still nachwirken.</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -431,11 +449,11 @@
       <li><span class="dot"></span><span class="t">Tageskontingent, Rate-Limits, Velocity-Dämpfung gegen Spam</span></li>
     </ul>
 
-    <h3>Voteverse Points &amp; Boost</h3>
+    <h3>Voteverse Points &amp; Boost <span style="font-family:var(--mono);font-size:12px;color:var(--amber);font-weight:500;">— gebaut, für den Launch deaktiviert</span></h3>
     <ul class="flist">
       <li><span class="dot"></span><span class="t">Unveränderliches Transaktions-Ledger, Wallet nur serverseitig änderbar</span></li>
-      <li><span class="dot"></span><span class="t">Boost überall verfügbar, immer als „⚡ Sponsored“ gekennzeichnet, gedeckelt</span></li>
-      <li><span class="dot"></span><span class="t">50 Bonus-Points bei Registrierung, <code>/points</code>-Shop mit Verlauf</span></li>
+      <li><span class="dot"></span><span class="t">Boost-Modell fertig: überall verfügbar, immer als „⚡ Sponsored“ gekennzeichnet, gedeckelt</span></li>
+      <li><span class="dot open"></span><span class="t"><code>/points</code>-Shop, Wallet-Chip und „Boost this“ sind aktuell ausgeblendet (404 bzw. kein UI) — ein Flag-Wechsel bringt sie ohne Neubau zurück</span></li>
     </ul>
 
     <h3>Battles &amp; This or That</h3>
@@ -454,7 +472,8 @@
 
     <h3>Noch offen</h3>
     <ul class="flist">
-      <li><span class="dot open"></span><span class="t">Echte Stripe-Zahlung (braucht Anbieter-Account des Nutzers)</span></li>
+      <li><span class="dot open"></span><span class="t">Impressum — wartet auf Name, Anschrift und Kontakt vom Nutzer (wird nicht erfunden)</span></li>
+      <li><span class="dot open"></span><span class="t">Echte Stripe-Zahlung, geplant ab 01.01.2027 mit Holding-/operativer UG</span></li>
       <li><span class="dot open"></span><span class="t">News-Ingestion &amp; automatische KI-Themengenerierung</span></li>
       <li><span class="dot open"></span><span class="t">Gamification: XP, Level, Badges, Streaks</span></li>
       <li><span class="dot open"></span><span class="t">Admin-Dashboard, Moderations-Queue</span></li>
@@ -465,20 +484,25 @@
   <section>
     <div class="label">Zugang</div>
     <h2>Starten &amp; anmelden</h2>
-    <pre>cd C:\Users\Kreshnik\voteverse
+    <pre>cd C:\Users\Kreshnik\rankly
 npm run dev
 # API   → http://localhost:4000/api/v1
 # Web   → http://localhost:3000</pre>
+    <p style="font-size:13px;color:var(--ink-3);margin-top:-4px;">
+      Der Projektordner heißt auf der Festplatte noch <code>rankly</code> — Code, Marke, Datenbank
+      und Seed-Daten sind umbenannt, nur der Ordnerpfad selbst wurde bewusst nicht angefasst,
+      um laufende Prozesse nicht mitten in der Session zu zerschießen. Auf Wunsch jederzeit nachziehbar.
+    </p>
     <table class="creds">
       <tr><td>Demo-Login</td><td><code>demo@seed.voteverse.dev</code> / <code>password123</code></td></tr>
       <tr><td>Admin-Login</td><td><code>admin@seed.voteverse.dev</code> / <code>password123</code></td></tr>
-      <tr><td>Letzte Commits</td><td><code>f611ecb</code> · <code>b70db29</code> · <code>3a84a85</code></td></tr>
+      <tr><td>Letzte Commits</td><td><code>b98b23b</code> · <code>f611ecb</code> · <code>b70db29</code></td></tr>
     </table>
   </section>
 
   <footer>
-    <span>C:\Users\Kreshnik\voteverse</span>
-    <span>main-Branch, 3 Commits</span>
+    <span>C:\Users\Kreshnik\rankly</span>
+    <span>main-Branch, 5 Commits</span>
   </footer>
 
 </div>

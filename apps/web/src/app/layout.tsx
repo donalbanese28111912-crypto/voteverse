@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Link from 'next/link';
 import { Suspense } from 'react';
 import { SiteHeader } from '@/components/site-header';
 import { Analytics } from '@/components/analytics';
@@ -46,7 +47,12 @@ export default function RootLayout({
           {children}
         </main>
         <footer className="border-t border-[var(--border)] py-8 text-center text-xs text-[var(--ink-3)]">
-          Voteverse — the world&apos;s opinion layer. Community opinion, not fact.
+          <p>Voteverse — the world&apos;s opinion layer. Community opinion, not fact.</p>
+          <nav className="mt-2 flex justify-center gap-4">
+            <Link href="/impressum" className="hover:underline">
+              Impressum
+            </Link>
+          </nav>
         </footer>
         <Suspense>
           <Analytics />
