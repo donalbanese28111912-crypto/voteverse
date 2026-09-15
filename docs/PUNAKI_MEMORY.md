@@ -257,5 +257,6 @@ eingestellt werden)" unter „Offen/später".
 - `docs/punaki-master-spec.md` — vollständiger, unveränderter
   Ursprungs-Prompt.
 - `docs/PUNAKI_MEMORY.md` — **dieses Dokument.**
-- Zum Vergleich/Kontext (anderes Produkt, gleicher Lovable-Workspace):
-  `docs/PROJECT_MEMORY.md` (Voteverse), Abschnitt 12.
+- Zum Vergleich/Kontext (andere Produkte, gleicher Lovable-Workspace):
+  `docs/PROJECT_MEMORY.md` (Voteverse) Abschnitt 12,
+  `docs/AI_UNIVERSE_MEMORY.md` (Mr. & Mrs. AI Universe).

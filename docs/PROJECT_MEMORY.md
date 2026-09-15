@@ -35,10 +35,12 @@ weil es dieser Session technisch nicht zugänglich ist:
 - **Andere Projekte — teilweise geschlossen.** Es gibt mindestens ein
   zweites Voteverse/Rankly-Projekt außerhalb dieses Repos: eine
   Lovable-App (TanStack Start) mit eigenem, unabhängigem Code- und
-  Datenbankstand — siehe Abschnitt 12. **Zusätzlich existiert ein
-  komplett anderes Produkt im selben Lovable-Workspace: „PunaAI"** (ein
-  Handwerker-Marktplatz, nichts mit Voteverse zu tun) — dokumentiert in
-  `docs/PUNAKI_MEMORY.md`. Weitere Projekte auf anderen Plattformen (siehe
+  Datenbankstand — siehe Abschnitt 12. **Zusätzlich existieren zwei
+  komplett andere Produkte im selben Lovable-Workspace:** „PunaAI" (ein
+  Handwerker-Marktplatz, dokumentiert in `docs/PUNAKI_MEMORY.md`) und
+  „Mr. & Mrs. AI Universe" (eine fiktive globale Pageant-/Show-Plattform,
+  dokumentiert in `docs/AI_UNIVERSE_MEMORY.md`) — beide nichts mit
+  Voteverse zu tun. Weitere Projekte auf anderen Plattformen (siehe
   Tool-Liste in Abschnitt 9) sind weiterhin nicht bekannt, solange sie
   nicht genannt/freigegeben werden.
 
@@ -550,3 +552,8 @@ aber bisher nicht angefragt/entschieden.
   `https://lovable.dev/projects/52a1eaf2-119b-4197-9a30-739f35d61ab2` —
   vollständig dokumentiert in `docs/PUNAKI_MEMORY.md` und
   `docs/punaki-master-spec.md`.
+- Lovable-Projekt „Mr&Mrs AI Universe" (anderes Produkt, gleicher
+  Lovable-Workspace) —
+  `https://lovable.dev/projects/c6f44b72-aea1-4665-b40c-6f4cf893eb63` —
+  vollständig dokumentiert in `docs/AI_UNIVERSE_MEMORY.md` und
+  `docs/ai-universe-master-spec.md`.
