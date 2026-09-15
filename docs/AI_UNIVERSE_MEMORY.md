@@ -15,12 +15,13 @@
 
 Gefunden am 15.09.2026 über einen vom Nutzer geteilten Lovable-Link,
 während an Voteverse gearbeitet wurde. Zugriff nur lesend über den
-Lovable-MCP-Server. Bei drei Lovable-Projekten im selben Workspace mit
+Lovable-MCP-Server. Inzwischen sind vier Lovable-Projekte im selben
+Workspace bekannt (siehe `docs/PROJECT_MEMORY.md` Abschnitt 0) mit
 demselben Muster (Vision zuerst mit dem Nutzer besprochen, dann per
-Master-Prompt an Lovable übergeben) ist davon auszugehen, dass **weitere,
-noch nicht geteilte Projekte im selben Workspace existieren könnten** —
-falls ja, bitte Links teilen, dann wird auch dafür ein Memory-Dokument
-angelegt.
+Master-Prompt an Lovable übergeben) — es ist davon auszugehen, dass
+**weitere, noch nicht geteilte Projekte im selben Workspace existieren
+könnten**. Falls ja, bitte Links teilen, dann wird auch dafür ein
+Memory-Dokument angelegt.
 
 ---
 
@@ -186,4 +187,5 @@ Unterseiten bereits vorhanden als im Screenshot der Homepage sichtbar.
 - `docs/AI_UNIVERSE_MEMORY.md` — **dieses Dokument.**
 - Zum Vergleich/Kontext (andere Produkte, gleicher Lovable-Workspace):
   `docs/PROJECT_MEMORY.md` (Voteverse) Abschnitt 12,
-  `docs/PUNAKI_MEMORY.md` (PunaAI).
+  `docs/PUNAKI_MEMORY.md` (PunaAI),
+  `docs/LUCKY_STAR_NUMBERS_MEMORY.md` (Lucky Star Numbers).

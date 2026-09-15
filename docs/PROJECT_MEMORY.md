@@ -35,14 +35,16 @@ weil es dieser Session technisch nicht zugänglich ist:
 - **Andere Projekte — teilweise geschlossen.** Es gibt mindestens ein
   zweites Voteverse/Rankly-Projekt außerhalb dieses Repos: eine
   Lovable-App (TanStack Start) mit eigenem, unabhängigem Code- und
-  Datenbankstand — siehe Abschnitt 12. **Zusätzlich existieren zwei
+  Datenbankstand — siehe Abschnitt 12. **Zusätzlich existieren drei
   komplett andere Produkte im selben Lovable-Workspace:** „PunaAI" (ein
-  Handwerker-Marktplatz, dokumentiert in `docs/PUNAKI_MEMORY.md`) und
+  Handwerker-Marktplatz, dokumentiert in `docs/PUNAKI_MEMORY.md`),
   „Mr. & Mrs. AI Universe" (eine fiktive globale Pageant-/Show-Plattform,
-  dokumentiert in `docs/AI_UNIVERSE_MEMORY.md`) — beide nichts mit
-  Voteverse zu tun. Weitere Projekte auf anderen Plattformen (siehe
-  Tool-Liste in Abschnitt 9) sind weiterhin nicht bekannt, solange sie
-  nicht genannt/freigegeben werden.
+  dokumentiert in `docs/AI_UNIVERSE_MEMORY.md`) und „Lucky Star Numbers"
+  (eine Lotto/EuroJackpot-Statistik- und Numerologie-App, dokumentiert in
+  `docs/LUCKY_STAR_NUMBERS_MEMORY.md`) — alle drei nichts mit Voteverse zu
+  tun. Weitere Projekte auf anderen Plattformen (siehe Tool-Liste in
+  Abschnitt 9) sind weiterhin nicht bekannt, solange sie nicht genannt/
+  freigegeben werden.
 
 Kurz: Dieses Dokument ist **so vollständig wie das Repo plus die inzwischen
 gefundenen/genannten externen Projekte es hergeben** — nicht zwangsläufig so
@@ -557,3 +559,8 @@ aber bisher nicht angefragt/entschieden.
   `https://lovable.dev/projects/c6f44b72-aea1-4665-b40c-6f4cf893eb63` —
   vollständig dokumentiert in `docs/AI_UNIVERSE_MEMORY.md` und
   `docs/ai-universe-master-spec.md`.
+- Lovable-Projekt „Lucky Star Numbers" / „Lotto & EuroJackpot AI" (anderes
+  Produkt, gleicher Lovable-Workspace) —
+  `https://lovable.dev/projects/58ea6980-e37b-4a97-bceb-7efcf3e55f84` —
+  vollständig dokumentiert in `docs/LUCKY_STAR_NUMBERS_MEMORY.md` und
+  `docs/lucky-star-numbers-master-spec.md`.

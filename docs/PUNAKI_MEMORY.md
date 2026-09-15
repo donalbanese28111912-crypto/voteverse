@@ -259,4 +259,5 @@ eingestellt werden)" unter „Offen/später".
 - `docs/PUNAKI_MEMORY.md` — **dieses Dokument.**
 - Zum Vergleich/Kontext (andere Produkte, gleicher Lovable-Workspace):
   `docs/PROJECT_MEMORY.md` (Voteverse) Abschnitt 12,
-  `docs/AI_UNIVERSE_MEMORY.md` (Mr. & Mrs. AI Universe).
+  `docs/AI_UNIVERSE_MEMORY.md` (Mr. & Mrs. AI Universe),
+  `docs/LUCKY_STAR_NUMBERS_MEMORY.md` (Lucky Star Numbers).
