@@ -35,9 +35,12 @@ weil es dieser Session technisch nicht zugänglich ist:
 - **Andere Projekte — teilweise geschlossen.** Es gibt mindestens ein
   zweites Voteverse/Rankly-Projekt außerhalb dieses Repos: eine
   Lovable-App (TanStack Start) mit eigenem, unabhängigem Code- und
-  Datenbankstand — siehe Abschnitt 12. Weitere Projekte auf anderen
-  Plattformen (siehe Tool-Liste in Abschnitt 9) sind weiterhin nicht
-  bekannt, solange sie nicht genannt/freigegeben werden.
+  Datenbankstand — siehe Abschnitt 12. **Zusätzlich existiert ein
+  komplett anderes Produkt im selben Lovable-Workspace: „PunaAI"** (ein
+  Handwerker-Marktplatz, nichts mit Voteverse zu tun) — dokumentiert in
+  `docs/PUNAKI_MEMORY.md`. Weitere Projekte auf anderen Plattformen (siehe
+  Tool-Liste in Abschnitt 9) sind weiterhin nicht bekannt, solange sie
+  nicht genannt/freigegeben werden.
 
 Kurz: Dieses Dokument ist **so vollständig wie das Repo plus die inzwischen
 gefundenen/genannten externen Projekte es hergeben** — nicht zwangsläufig so
@@ -543,3 +546,7 @@ aber bisher nicht angefragt/entschieden.
 - Lovable-Projekt „Voteverse" (TanStack Start) —
   `https://lovable.dev/projects/2808a071-54ef-4329-9855-668d486a677f` —
   siehe Abschnitt 12.
+- Lovable-Projekt „PunaAI" (anderes Produkt, gleicher Lovable-Workspace) —
+  `https://lovable.dev/projects/52a1eaf2-119b-4197-9a30-739f35d61ab2` —
+  vollständig dokumentiert in `docs/PUNAKI_MEMORY.md` und
+  `docs/punaki-master-spec.md`.
