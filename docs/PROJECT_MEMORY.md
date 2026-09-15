@@ -1,4 +1,4 @@
-# Voteverse — Projekt-Memory (komplett, Stand 2026-09-14)
+# Voteverse — Projekt-Memory (komplett, Stand 2026-09-15)
 
 > **Zweck dieses Dokuments:** Eine einzige Datei, die alles zusammenfasst, was
 > über Voteverse bekannt und entschieden ist — Vision, Architektur,
@@ -32,15 +32,17 @@ weil es dieser Session technisch nicht zugänglich ist:
   Voteverse an anderer Stelle geschickt wurden, sind sie hier nicht
   vorhanden — bitte erneut hochladen bzw. ins Repo legen (z. B. unter
   `docs/assets/`), dann kann dieses Dokument sie referenzieren.
-- **Keine anderen Projekte.** Diese Session hat nur Zugriff auf das
-  Repository `donalbanese28111912-crypto/voteverse`. Falls es weitere
-  Projekte gibt (andere Repos, andere Tools), muss das Repo explizit
-  freigegeben bzw. benannt werden — siehe Abschnitt 9 für die
-  Tool-Anbindungen, die diese Umgebung grundsätzlich hat.
+- **Andere Projekte — teilweise geschlossen.** Es gibt mindestens ein
+  zweites Voteverse/Rankly-Projekt außerhalb dieses Repos: eine
+  Lovable-App (TanStack Start) mit eigenem, unabhängigem Code- und
+  Datenbankstand — siehe Abschnitt 12. Weitere Projekte auf anderen
+  Plattformen (siehe Tool-Liste in Abschnitt 9) sind weiterhin nicht
+  bekannt, solange sie nicht genannt/freigegeben werden.
 
-Kurz: Dieses Dokument ist **so vollständig wie das Repo es hergibt** — nicht
-zwangsläufig so vollständig wie alle je geführten Gespräche. Abschnitt 10
-listet konkret, was noch von Dir gebraucht wird, um Lücken zu schließen.
+Kurz: Dieses Dokument ist **so vollständig wie das Repo plus die inzwischen
+gefundenen/genannten externen Projekte es hergeben** — nicht zwangsläufig so
+vollständig wie alle je geführten Gespräche. Abschnitt 10 listet konkret,
+was noch von Dir gebraucht wird, um verbleibende Lücken zu schließen.
 
 ---
 
@@ -386,19 +388,26 @@ Sinnvoll-Reihenfolge):
 **Konkret von Dir gebraucht, um dieses Memory und das Projekt lückenlos zu
 machen** (siehe auch Abschnitt 0):
 
-- **Andere Projekte:** Falls es neben Voteverse weitere Projekte gibt, die
-  in dieses Memory sollen — welche, und liegen sie in weiteren GitHub-Repos?
-  Die müssten explizit freigegeben werden, dann kann ich sie genauso
-  dokumentieren.
+- ~~**Andere Projekte**~~ — **teilweise beantwortet (15.09.):** Die
+  Lovable-App (TanStack Start) ist jetzt in Abschnitt 12 dokumentiert. Offen
+  bleibt: gibt es noch weitere Projekte (andere Repos, andere Plattformen)?
+  Und — wichtiger — **welches der beiden Voteverse-Projekte (GitHub oder
+  Lovable) soll die Haupt-Implementierung sein**, siehe Frage am Ende von
+  Abschnitt 12.
 - **Bilder/Design-Referenzen:** Screenshots, Mockups, Logo, Farbpalette —
   am besten direkt ins Repo legen (z. B. `docs/assets/`) oder in dieser
-  Session hochladen, dann trage ich sie hier ein.
+  Session hochladen, dann trage ich sie hier ein. (Ein Screenshot der
+  Lovable-App-Startseite liegt der Session vor, siehe Abschnitt 12 — für
+  dieses Repo selbst fehlen weiterhin Bild-Assets.)
 - **Gewünschte weitere KI-/Tool-Anbindungen:** Soll eines der in Abschnitt 9
   gelisteten Tools tatsächlich an Voteverse angebunden werden (z. B. Notion
   für Roadmap-Tracking, Slack für Alerts)? Aktuell ist nichts davon mit dem
   Produkt verdrahtet.
 - **News-API/RSS-Quelle** für Punkt 2 oben.
-- **Stripe-Zugangsdaten** für Punkt 5 oben (erst 2027 relevant).
+- **Stripe-Zugangsdaten** für Punkt 5 oben (erst 2027 relevant) — die
+  Lovable-App hat bereits eine echte Stripe-Integration; falls das GitHub-
+  Repo diese übernehmen soll, könnten die dortigen Stripe-Keys/-Konfiguration
+  als Vorlage dienen (nach Rücksprache).
 
 ---
 
@@ -421,13 +430,116 @@ machen** (siehe auch Abschnitt 0):
 
 ---
 
-## 12. Quellen in diesem Repo
+## 12. Zweites Voteverse-Projekt: Lovable-App (TanStack Start)
 
+Am 15.09. gefunden: Neben diesem GitHub-Repo existiert eine **zweite,
+unabhängige Voteverse-Implementierung** auf [Lovable](https://lovable.dev) —
+Projekt-ID `2808a071-54ef-4329-9855-668d486a677f`, Workspace
+`fe22a0379937aa454cd2`, Editor:
+`https://lovable.dev/projects/2808a071-54ef-4329-9855-668d486a677f`.
+Sichtbarkeit: privat. Erstellt 10.09.2026, zuletzt bearbeitet 12.09.2026.
+
+**Wichtig:** Dieses Projekt ist technisch **komplett getrennt** vom
+NestJS/Next.js-Monorepo in diesem Repo — eigener Code, eigene Datenbank,
+kein bekannter Git-Sync zwischen beiden. Beide verfolgen dieselbe Vision
+(siehe `docs/rankly-master-spec.md`), sind aber zwei parallele, nicht
+gegenseitig synchronisierte Umsetzungen desselben Produkts.
+
+### Tech-Stack (abweichend vom GitHub-Repo)
+
+| Ebene | Wahl |
+|---|---|
+| Framework | TanStack Start (React 19, TanStack Router 1.170, Vite 8) |
+| Sprache | TypeScript |
+| Styling | Tailwind CSS v4 + shadcn/ui (Radix-Primitives) |
+| ORM/DB | Drizzle ORM + PostgreSQL, gehostet über Supabase (`@supabase/supabase-js`) |
+| Auth | `@lovable.dev/cloud-auth-js` |
+| Zahlungen | **Echtes Stripe** bereits integriert (`stripe`, `@stripe/stripe-js`,
+  `@stripe/react-stripe-js`) — `StripeEmbeddedCheckout.tsx`,
+  `StripeSubscriptionCheckout.tsx`, `PaymentTestModeBanner.tsx` |
+| Paketmanager | Bun (`bun.lock`, `bunfig.toml`) |
+| Migrations | `drizzle/migrations/0000`–`0009` (u. a. Core-Schema, RPCs, Credit-Points-Limits, Subscriptions/Supporter, Battles/Polls/Comments, Content-Universum, Übersetzungen) |
+
+### Aktueller Stand (laut `roadmap.md` im Lovable-Projekt)
+
+Erledigt:
+- Echte Konten, dauerhaft gespeicherte Stimmen
+- Points-Wallet, Shop, **serverseitige Zahlungen** und Transaktionsverlauf
+  (weiter als der GitHub-Stand — dort ist Stripe nur vorbereitet, hier real
+  angebunden, aktuell aber ebenfalls **ausgeblendet/deaktiviert**, siehe unten)
+- DB-Rankings für Städte, Länder, KI, Smartphones, Filme
+- Mobile Abstimmung mit direktem Ergebnis, großen Up/Down-Flächen
+- Admin-Panel für Reports, Moderation, Stimmen, Points, Zahlungen
+- Zahlungen ausgeblendet, Impressum, zusätzliche Umfragen
+- **Welle 1:** echte Battles, Frage-Formate (Ja/Nein, Auswahl, Bewertung,
+  Skala, Prognose), Suche, „Überrasch mich", Trending nach Tempo
+- Anmeldung vorerst ausgeblendet, sämtliche sichtbaren Texte an
+  Sprachauswahl gekoppelt (**i18n/Sprachumschalter existiert**, Screenshot
+  zeigt DE-Auswahl im Header)
+
+Offen (laut Roadmap):
+- **Welle 2:** Themenseiten, Tagesfrage, Kommentare mit Moderation,
+  Profilstatistik, Teilen, Community-Vorschläge
+- **Welle 3:** Startseite nach Konzept, Deutsch/Englisch vollständig, SEO,
+  mehr Inhalte
+
+Zusätzlich laut internen Planungsdokumenten (`.lovable/plan/*.md` im
+Lovable-Projekt) ein laufendes Vorhaben **„Großes Inhalts-Universum"**:
+Kategorienbaum, Schlagworte, Einträge-Universum (Personen/Orte/Produkte/
+Marken), Verknüpfungen zwischen Themen, große Content-Menge per
+Seed-Generator (Ziel: 600+ Duelle, 800+ Fragen, 250+ Rankings, 2.000+
+Einträge), neue Startseite mit vielen Themenreihen, erweiterte Trending-
+Logik, Feed-Mischung nach festen Anteilen (aktuell/Interessen/dauerhaft/
+Entdeckung/Duelle/Experiment).
+
+### Verhältnis zum GitHub-Repo
+
+- **Gemeinsame Vision, getrennte Umsetzung.** Beide Implementierungen gehen
+  auf denselben 74-Punkte-Master-Prompt zurück (siehe
+  `docs/rankly-master-spec.md`) — der GitHub-Fortsetzungs-Prompt
+  (`docs/voteverse-continuation-prompt.md`) ist eine spätere, destillierte
+  Fassung davon für die NestJS/Next.js-Seite.
+- **Unterschiedlicher Reifegrad in unterschiedlichen Bereichen.** Die
+  Lovable-App hat bereits echte Battles mit mehreren Frage-Typen, echte
+  Stripe-Integration und einen Sprachumschalter; das GitHub-Repo hat dafür
+  eine sauberere, testabgesicherte Ranking-Engine (Wilson + Bayesian + Trust,
+  19 Property-Tests) und eine production-ready Deployment-Pipeline
+  (Vercel + Railway, live erreichbare Domain-Architektur).
+  Beide haben Monetarisierung aktuell **bewusst deaktiviert/ausgeblendet**.
+- **Kein bekannter Datenaustausch.** Nutzer, Votes, Rankings sind in
+  getrennten Datenbanken (Prisma/Postgres hier vs. Drizzle/Supabase dort) —
+  nichts davon ist synchronisiert.
+- **Offene Frage an Dich:** Welches der beiden Projekte ist die
+  „Haupt"-Implementierung, die weitergeführt/deployed werden soll? Oder
+  bleiben beide parallel bestehen (z. B. Lovable als schnelles
+  Experimentierfeld, GitHub-Repo als production-Kandidat)? Das entscheidet,
+  wie viel Aufwand künftig in welches Repo fließen sollte.
+
+### Zugriff
+
+Diese Session hat über den Lovable-MCP-Server Lese-/Schreibzugriff auf das
+Lovable-Projekt (Dateien lesen, Nachrichten an den Lovable-Agenten senden,
+Diffs einsehen) — siehe Tool-Liste in Abschnitt 9. Ein Import des
+Lovable-Codes in dieses GitHub-Repo (oder umgekehrt) ist technisch möglich,
+aber bisher nicht angefragt/entschieden.
+
+---
+
+## 13. Quellen
+
+**In diesem Repo (`donalbanese28111912-crypto/voteverse`):**
 - `README.md` — Kurzüberblick, Setup, API-Referenz.
 - `docs/voteverse-continuation-prompt.md` — ausführlicher
   Fortsetzungs-Prompt für Coding-Sessions (Basis dieses Dokuments).
 - `docs/deployment.md` — vollständige Deployment-Anleitung inkl. Secrets.
 - `docs/status-report.html` — gerenderter Statusbericht mit
   Fortschrittsbalken.
+- `docs/rankly-master-spec.md` — der vollständige ursprüngliche
+  74-Punkte-Master-Prompt (Produktvision vor dem Rebrand zu Voteverse).
 - `docs/PROJECT_MEMORY.md` — **dieses Dokument**, die konsolidierte
   Gesamtübersicht.
+
+**Extern:**
+- Lovable-Projekt „Voteverse" (TanStack Start) —
+  `https://lovable.dev/projects/2808a071-54ef-4329-9855-668d486a677f` —
+  siehe Abschnitt 12.
