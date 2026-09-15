@@ -46,6 +46,22 @@ Der vollständige Ursprungs-Prompt steht unverändert in
 
 ---
 
+## 1a. Herkunft des Prompts
+
+Der Nutzer hat am 15.09.2026 einen ChatGPT-Freigabelink als Ursprung dieses
+Prompts genannt: `https://chatgpt.com/share/6aa9094c-1aec-83eb-af5f-dedcd6c2a1cb`.
+Vermutlich wurde der Master-Prompt dort mit ChatGPT erarbeitet, bevor er als
+Lovable-Erstellungs-Prompt eingefügt wurde (Prompt-Text ist identisch mit
+der Lovable-Projektbeschreibung, siehe Abschnitt 1). **`chatgpt.com` ist vom
+Netzwerk-Egress-Proxy dieser Session blockiert** — der Link selbst konnte
+nicht abgerufen werden, war aber inhaltlich auch nicht mehr nötig, da der
+vollständige Prompt bereits über Lovable vorlag (`docs/ai-universe-master-spec.md`).
+Falls das ChatGPT-Gespräch zusätzlichen Kontext enthält (Entstehung,
+Diskussion, spätere Änderungen gegenüber dem finalen Prompt), bitte den
+Text direkt teilen.
+
+---
+
 ## 2. Zugriff & Identifikatoren
 
 | | |
