@@ -568,3 +568,7 @@ aber bisher nicht angefragt/entschieden.
   Lovable-Projekt) — nur als Platzhalter angelegt, Inhalt noch nicht
   zugänglich (`chatgpt.com` ist vom Netzwerk-Egress dieser Session
   blockiert) — siehe `docs/BASTION_OF_FREEDOM_MEMORY.md`.
+- ChatGPT-Projekt „Aktien Web-App für Mitarbeiter" (anderes Produkt,
+  **kein** Lovable-Projekt) — ebenfalls nur als Platzhalter angelegt,
+  Inhalt aus demselben Grund noch nicht zugänglich — siehe
+  `docs/AKTIEN_WEBAPP_MEMORY.md`.

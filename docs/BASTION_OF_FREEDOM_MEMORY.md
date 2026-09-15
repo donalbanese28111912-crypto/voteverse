@@ -49,4 +49,6 @@ Design, offene Punkte, Quellen) und ggf. der Original-Prompt als
   `docs/PROJECT_MEMORY.md` (Voteverse),
   `docs/PUNAKI_MEMORY.md` (PunaAI),
   `docs/AI_UNIVERSE_MEMORY.md` (Mr. & Mrs. AI Universe),
-  `docs/LUCKY_STAR_NUMBERS_MEMORY.md` (Lucky Star Numbers).
+  `docs/LUCKY_STAR_NUMBERS_MEMORY.md` (Lucky Star Numbers),
+  `docs/AKTIEN_WEBAPP_MEMORY.md` (Aktien Web-App für Mitarbeiter —
+  ebenfalls noch als Platzhalter, gleicher Grund: `chatgpt.com` blockiert).
