@@ -564,3 +564,7 @@ aber bisher nicht angefragt/entschieden.
   `https://lovable.dev/projects/58ea6980-e37b-4a97-bceb-7efcf3e55f84` —
   vollständig dokumentiert in `docs/LUCKY_STAR_NUMBERS_MEMORY.md` und
   `docs/lucky-star-numbers-master-spec.md`.
+- ChatGPT-Projekt „BASTION OF FREEDOM" (anderes Produkt, **kein**
+  Lovable-Projekt) — nur als Platzhalter angelegt, Inhalt noch nicht
+  zugänglich (`chatgpt.com` ist vom Netzwerk-Egress dieser Session
+  blockiert) — siehe `docs/BASTION_OF_FREEDOM_MEMORY.md`.
