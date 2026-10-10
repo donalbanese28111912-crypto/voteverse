@@ -23,3 +23,9 @@ Stand: 2026-10-09. Wird vom Skill `memory-keeper` gepflegt.
 - Neue Bilder der 8 Nationen sind aus Collagen ausgeschnitten (niedrigere Auflösung); Originale wären besser.
 - Rechtlich vor Echtbetrieb: Kryptowerte-Einordnung, Länder/Sanktionen, Steuern, Datenschutz bei Abstimmungen mit Namen.
 - Echte Adresse von Plattform 2 für den Link auf Plattform 1.
+
+## Prompt-Bibliothek (2026-10-10)
+- 24 Lovable-Projekte geprüft, Rangliste und 146 Prompts in `docs/prompts/` (INDEX.md, status.csv, je Projekt eine Datei, Master-Prompt). Skill `prompt-tracker` führt den Stand.
+- Platzhalter vor dem Senden ersetzen: {ADMIN_EMAIL}, {URL_PLATTFORM_1}, {URL_PLATTFORM_2}.
+- Dringendste Projekte: R01 PunaKI (live), R02 AI Universe Style Shop, R03 Wish Box Moments, R04 Eagle Diaspora Connect.
+- Querschnittsmuster: erster Nutzer wird Admin, KI ohne Limit, erfundene Zahlen, lang="en", englische 404, fehlendes og:image.
