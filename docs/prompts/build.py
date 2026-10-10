@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""Erzeugt INDEX.md und je Projekt eine Datei aus data/ und status.csv.
+Status-Quelle ist status.csv (Spalten: id;status;gesendet_am;notiz). Danach `python3 docs/prompts/build.py` ausführen."""
+import csv, os, re, sys
+here = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(here, "data"))
+from part3 import P  # noqa
+from extras import X  # noqa
+
+STATUSES = ["offen", "gesendet", "erledigt", "übersprungen"]
+master = open(os.path.join(here, "master-prompt.txt"), encoding="utf-8").read().strip()
+status_path = os.path.join(here, "status.csv")
+status = {}
+if os.path.exists(status_path):
+    for r in csv.DictReader(open(status_path, encoding="utf-8"), delimiter=";"):
+        status[r["id"]] = r
+
+def slug(s):
+    s = s.lower().replace("ä","ae").replace("ö","oe").replace("ü","ue").replace("ß","ss")
+    return re.sub(r"[^a-z0-9]+","-",s).strip("-")[:40]
+
+WRAP = ("Projekt: {name}. Bearbeite nur dieses Projekt. Lies zuerst AGENTS.md und roadmap.md. "
+        "Ändere nichts an Impressum, AGB und Datenschutz. Platzhalter wie {{ADMIN_EMAIL}} vorher durch den echten Wert ersetzen.\n\n"
+        "Auftrag: {text}\n\nFertig, wenn: {done} Tests laufen durch. Berichte am Ende kurz, was erledigt ist und was fehlt.")
+
+rows = []  # (id, rank, name, title, prio, kind)
+for p in sorted(P, key=lambda x: x["rank"]):
+    rk = f"R{p['rank']:02d}"
+    rows.append((f"{rk}-M", p["rank"], p["name"], "Master-Prompt (Grundregeln) zuerst senden", 2, p))
+    for i, q in enumerate(p["prompts"], 1):
+        rows.append((f"{rk}-{i:02d}", p["rank"], p["name"], q["title"], q["prio"], (p, q)))
+    rows.append((f"{rk}-H", p["rank"], p["name"], "GESAMT-Prompt: Hochstufung auf 9,5 (alles in einem)", 2, p))
+
+# status.csv ergänzen, nichts überschreiben
+for r in rows:
+    status.setdefault(r[0], dict(id=r[0], status="offen", gesendet_am="", notiz=""))
+with open(status_path, "w", encoding="utf-8", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=["id","status","gesendet_am","notiz"], delimiter=";")
+    w.writeheader()
+    for r in rows: w.writerow(status[r[0]])
+
+NOTEN = {1:(6.5,8.0),2:(4.0,7.5),3:(5.0,7.5),4:(5.0,7.5),5:(8.0,9.0),6:(7.5,8.5),7:(6.5,8.0),8:(6.0,8.0),9:(6.0,8.0),10:(6.0,7.5),11:(7.0,8.5),12:(7.0,8.5),13:(5.5,7.5),14:(6.5,8.0),15:(6.0,8.0),16:(7.0,8.5),17:(6.0,8.0),18:(6.0,7.5),19:(6.0,7.5),20:(6.0,7.5),21:(7.0,8.5),22:(7.0,8.5),23:(7.5,8.5),24:(7.5,8.5)}
+def fmt(x): return str(x).replace(".",",")
+PRIO = {1: "KRITISCH", 2: "wichtig", 3: "Verbesserung"}
+out = ["# Prompt-Bibliothek – Rangliste aller Lovable-Projekte", "",
+ "Stand wird aus `status.csv` erzeugt (`python3 docs/prompts/build.py`). Reihenfolge: dringendste Projekte oben.",
+ "Status: offen / gesendet / erledigt / übersprungen. Fragen an Claude: „Welcher Prompt fehlt noch?“, „Gib mir den nächsten Prompt“, „R03-02 ist gesendet“.", "",
+ "Vor dem Senden: `{ADMIN_EMAIL}`, `{URL_PLATTFORM_1}`, `{URL_PLATTFORM_2}` durch echte Werte ersetzen. Pro Projekt zuerst den Master-Prompt (`R##-M`), dann die Einzel-Prompts in Reihenfolge der Dringlichkeit.", ""]
+tot = {s:0 for s in STATUSES}
+for r in rows: tot[status[r[0]]["status"]] = tot.get(status[r[0]]["status"],0)+1
+out += [f"**Gesamt:** {len(rows)} Prompts – " + ", ".join(f"{k}: {v}" for k,v in tot.items()), ""]
+out += ["## Rangliste der Projekte", "", "| Rang | Projekt | Note heute | Note nach Prompts (Schätzung) | Lücke bis 9,5 | Lovable-ID | Lage | Prompts | offen |", "|---|---|---|---|---|---|---|---|---|"]
+for p in sorted(P, key=lambda x: x["rank"]):
+    rk = f"R{p['rank']:02d}"
+    ids = [r[0] for r in rows if r[0].startswith(rk+"-")]
+    offen = sum(1 for i in ids if status[i]["status"]=="offen")
+    n0, n1 = NOTEN[p['rank']]
+    out.append(f"| {rk} | [{p['name']}]({rk}-{slug(p['name'])}.md){' (LIVE)' if p['live'] else ''} | {fmt(n0)} | {fmt(n1)} | {fmt(round(9.5-n1,1))} | `{p['pid'][:8]}` | {p['note']} | {len(ids)} | {offen} |")
+out += ["", "Noten sind Schätzungen des Prüfers aus Code und Screenshot (1 bis 10), keine Messung. 9,5 verlangt zusätzlich echte Inhalte, echte Nutzung, Tests, Performance und rechtliche Prüfung (siehe `NOTE-9-5.md`).", "", "## Alle Prompts mit Status", "", "| ID | Projekt | Prompt | Priorität | Status | gesendet am | Notiz |", "|---|---|---|---|---|---|---|"]
+for r in rows:
+    s = status[r[0]]
+    out.append(f"| {r[0]} | {r[2]} | {r[3]} | {PRIO[r[4]]} | {s['status']} | {s['gesendet_am']} | {s['notiz']} |")
+open(os.path.join(here,"INDEX.md"),"w",encoding="utf-8").write("\n".join(out)+"\n")
+
+for p in sorted(P, key=lambda x: x["rank"]):
+    rk = f"R{p['rank']:02d}"
+    lines = [f"# {rk} – {p['name']}", "", f"- Lovable-Projekt-ID: `{p['pid']}`", f"- Lage: {p['note']}", f"- Veröffentlicht: {'JA (live)' if p['live'] else 'nein'}", "",
+             "Reihenfolge: zuerst Master-Prompt, dann die Prompts von oben nach unten. Platzhalter vorher ersetzen.", "",
+             f"## {rk}-M · Master-Prompt (Grundregeln)", f"Status: {status[rk+'-M']['status']}", "", "Text: siehe `master-prompt.txt` (unverändert in das Projekt senden).", ""]
+    for i, q in enumerate(p["prompts"], 1):
+        pid = f"{rk}-{i:02d}"
+        full = WRAP.format(name=p["name"], text=q["text"], done=q["done"])
+        lines += [f"## {pid} · {q['title']}", f"Priorität: {PRIO[q['prio']]} · Status: {status[pid]['status']}", "", "```", full, "```", ""]
+    n0, n1 = NOTEN[p["rank"]]
+    x = X[p["rank"]]
+    steps = "\n".join(f"{j}. {q['title']}: {q['text']}" for j, q in enumerate(p["prompts"], 1))
+    aus = "\n".join(f"- {a}" for a in x["ausbau"])
+    big = (f"Gesamtauftrag „Qualitätsstufe 9,5“ für das Projekt {p['name']}. Aktuelle Note ca. {fmt(n0)} von 10. Ziel: so weit wie ohne Eingriffe des Betreibers möglich (Ziel 9,5, realistisch {fmt(n1)}+). Arbeite in Phasen und melde nach jeder Phase kurz den Stand. Ändere nichts an Impressum, AGB und Datenschutz. Lies zuerst AGENTS.md und roadmap.md. Platzhalter wie {{ADMIN_EMAIL}} vorher ersetzen.\n\n"
+           f"PHASE 1 – Grundregeln (Sicherheit, Ehrlichkeit, Bedienung, Technik):\n{master}\n\n"
+           f"PHASE 2 – Projektaufgaben in dieser Reihenfolge:\n{steps}\n\n"
+           f"PHASE 3 – Ausbau Richtung 9,5:\n{aus}\n\n"
+           f"PHASE 4 – Messen und berichten: Tests (Vitest) und, wo sinnvoll, ein End-to-End-Test für den Hauptweg; Lighthouse-Werte für Start und Hauptseite (Ziel mindestens 90 bei Leistung, Barrierefreiheit, SEO); Mobilansicht 390 px geprüft. Liefere am Ende eine Tabelle: Kriterium (Sicherheit, Ehrlichkeit, Funktion, Design, Qualität, Inhalt) – Soll – Ist – offen, und eine ehrliche Selbstnote 1 bis 10. Nenne klar, was du NICHT erledigen konntest.\n\n"
+           f"Nicht per Prompt lösbar (Aufgabe des Betreibers, nicht erfinden): " + "; ".join(x["betreiber"]))
+    lines += [f"## {rk}-H · GESAMT-Prompt: Hochstufung auf 9,5", f"Status: {status[rk+'-H']['status']} · Hinweis: Sehr lang. Bei größeren Projekten erst die Einzel-Prompts senden und diesen Prompt zum Abschluss nutzen.", "", "```", big, "```", ""]
+    open(os.path.join(here, f"{rk}-{slug(p['name'])}.md"),"w",encoding="utf-8").write("\n".join(lines))
+print(len(rows), "Prompts,", len(P), "Projekte")
