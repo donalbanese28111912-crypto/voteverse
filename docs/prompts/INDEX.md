@@ -9,32 +9,34 @@ Vor dem Senden: `{ADMIN_EMAIL}`, `{URL_PLATTFORM_1}`, `{URL_PLATTFORM_2}` durch 
 
 ## Rangliste der Projekte
 
-| Rang | Projekt | Lovable-ID | Note/Lage | Prompts | offen |
-|---|---|---|---|---|---|
-| R01 | [PunaKI – dein SmartHandwerker](R01-punaki-dein-smarthandwerker.md) (LIVE) | `52a1eaf2` | VERÖFFENTLICHT. Note 6,5. Erfundene Zahlen wirken echt; Notfall-KI ohne Limit; Altmarke projob im Code. | 6 | 6 |
-| R02 | [AI Universe Style Shop](R02-ai-universe-style-shop.md) | `359cc222` | Note 4. KRITISCH: /admin ohne Login, Löschen/Hochladen/KI-Kosten für jeden möglich. | 7 | 7 |
-| R03 | [Wish Box Moments](R03-wish-box-moments.md) | `1659ee90` | Note 5. Admin-Übernahme, KI ohne Limit, erfundene „echte“ Zitate. | 7 | 7 |
-| R04 | [Eagle Diaspora Connect](R04-eagle-diaspora-connect.md) | `da528ec7` | Note 5. Profile und „anonyme“ Autoren in der Datenbank offen lesbar; Notification-Spam. | 7 | 7 |
-| R05 | [NationVerse Plattform 1 – VIP Nation Coinverse](R05-nationverse-plattform-1-vip-nation-coinv.md) | `26b41ecb` | Note 8 (eigene Einschätzung). Bilder der 24 fehlenden Coins folgen; Link zu Plattform 2 offen. | 5 | 5 |
-| R06 | [NationVerse Plattform 2 – Marktplatz](R06-nationverse-plattform-2-marktplatz.md) | `8671a75d` | Note 7,5 (eigene Einschätzung). Katalogtausch und Bilder werden gerade umgesetzt. | 6 | 6 |
-| R07 | [Puna AI Digitalwerk](R07-puna-ai-digitalwerk.md) | `0ca58bee` | Note 6,5. Falsche Shop-Aussagen, Admin-Vergabe, PDF ungeschützt. | 6 | 6 |
-| R08 | [World Watch Albania](R08-world-watch-albania.md) | `adb2e067` | Note 6. Alles wird ungeprüft veröffentlicht, Admin-Automatik, Zähler-Missbrauch. | 7 | 7 |
-| R09 | [Die Alba Familie (Kinderseite)](R09-die-alba-familie-kinderseite.md) | `8db5c140` | Note 6. Kinderseite: KI ohne Limit, Prompt-Injection möglich, Kinderfragen werden gespeichert. | 6 | 6 |
-| R10 | [Lucky Star Numbers](R10-lucky-star-numbers.md) | `58ea6980` | Note 6. Chat ohne Limit, irreführende Begriffe, kein 18+-Gate. | 6 | 6 |
-| R11 | [Web & AI Solutions Hub (Klarwerk)](R11-web-ai-solutions-hub-klarwerk.md) | `47b36b47` | Note 7. Kontaktformular und Buchung speichern nichts – Leads gehen verloren. | 6 | 6 |
-| R12 | [ClipCraft: Dein Ideenpilot](R12-clipcraft-dein-ideenpilot.md) | `bb718471` | Note 7. Limit umgehbar über ai_usage; Preissektion und Zahlung fehlen. | 6 | 6 |
-| R13 | [Puna Beauty Hub](R13-puna-beauty-hub.md) | `99152909` | Note 5,5. Tote Buttons, erfundene Anbieterinnen ohne Kennzeichnung. | 6 | 6 |
-| R14 | [Puna Beauty Shop](R14-puna-beauty-shop.md) | `6d31424e` | Note 6,5. Bestellung und Preise werden nicht gespeichert. | 6 | 6 |
-| R15 | [Voteverse (Rankly)](R15-voteverse-rankly.md) | `2808a071` | Note 6. Erfundene Startstimmen, schwacher Abstimmungsschutz, Wortfilter sperrt harmlose Wörter. | 6 | 6 |
-| R16 | [BASTION OF FREEDOM – Pi Dash Nise I](R16-bastion-of-freedom-pi-dash-nise-i.md) | `01371116` | Note 7. Warteliste meldet Erfolg trotz Speicherfehler; Demo-Auktion irreführend. | 6 | 6 |
-| R17 | [StarkGemeinsam](R17-starkgemeinsam.md) | `1f056417` | Note 6. Newsletter ist eine Attrappe; Shopify-Ausfall kippt die Startseite. | 6 | 6 |
-| R18 | [AMAZING AI UNIVERSE](R18-amazing-ai-universe.md) | `c6f44b72` | Note 6. Navigation läuft über; Zahlen widersprechen sich; Admin- und Wettbewerbsrecht klären. | 6 | 6 |
-| R19 | [Kühlschrank WG Hub](R19-kuehlschrank-wg-hub.md) | `1b3db8a4` | Note 6. Likes, Kommentare, Teilen und Ton sind Attrappen; nur 9 von 30 Porträts. | 6 | 6 |
-| R20 | [Creator's Hub AI](R20-creator-s-hub-ai.md) | `3d4df38c` | Note 6. Beschreibung verspricht mehr als vorhanden; Admin-Automatik prüfen. | 6 | 6 |
-| R21 | [One Plis (Echoes of Pelasgia)](R21-one-plis-echoes-of-pelasgia.md) | `74177c7b` | Note 7. Suche mit toten Treffern, keine mobile Navigation, Orakel ohne Limit. | 6 | 6 |
-| R22 | [Die 13 Illuminaten](R22-die-13-illuminaten.md) | `6c716278` | Note 7. Chronik mobil kaum bedienbar, Navigation bricht um, Orakel ohne Limit. | 6 | 6 |
-| R23 | [Pflege Compass](R23-pflege-compass.md) | `040da1aa` | Note 7,5. Quellen und Stand pro Bundesland fehlen; lang-Attribut fest „en“. | 6 | 6 |
-| R24 | [PunaKI Handwerker Shop](R24-punaki-handwerker-shop.md) | `a2ddadf7` | Note 7,5. Kein Weg vom Warenkorb zum Betrieb (Checkout gesperrt). | 5 | 5 |
+| Rang | Projekt | Note heute | Note nach Prompts (Schätzung) | Lücke bis 9,5 | Lovable-ID | Lage | Prompts | offen |
+|---|---|---|---|---|---|---|---|---|
+| R01 | [PunaKI – dein SmartHandwerker](R01-punaki-dein-smarthandwerker.md) (LIVE) | 6,5 | 8,0 | 1,5 | `52a1eaf2` | VERÖFFENTLICHT. Note 6,5. Erfundene Zahlen wirken echt; Notfall-KI ohne Limit; Altmarke projob im Code. | 6 | 6 |
+| R02 | [AI Universe Style Shop](R02-ai-universe-style-shop.md) | 4,0 | 7,5 | 2,0 | `359cc222` | Note 4. KRITISCH: /admin ohne Login, Löschen/Hochladen/KI-Kosten für jeden möglich. | 7 | 7 |
+| R03 | [Wish Box Moments](R03-wish-box-moments.md) | 5,0 | 7,5 | 2,0 | `1659ee90` | Note 5. Admin-Übernahme, KI ohne Limit, erfundene „echte“ Zitate. | 7 | 7 |
+| R04 | [Eagle Diaspora Connect](R04-eagle-diaspora-connect.md) | 5,0 | 7,5 | 2,0 | `da528ec7` | Note 5. Profile und „anonyme“ Autoren in der Datenbank offen lesbar; Notification-Spam. | 7 | 7 |
+| R05 | [NationVerse Plattform 1 – VIP Nation Coinverse](R05-nationverse-plattform-1-vip-nation-coinv.md) | 8,0 | 9,0 | 0,5 | `26b41ecb` | Note 8 (eigene Einschätzung). Bilder der 24 fehlenden Coins folgen; Link zu Plattform 2 offen. | 5 | 5 |
+| R06 | [NationVerse Plattform 2 – Marktplatz](R06-nationverse-plattform-2-marktplatz.md) | 7,5 | 8,5 | 1,0 | `8671a75d` | Note 7,5 (eigene Einschätzung). Katalogtausch und Bilder werden gerade umgesetzt. | 6 | 6 |
+| R07 | [Puna AI Digitalwerk](R07-puna-ai-digitalwerk.md) | 6,5 | 8,0 | 1,5 | `0ca58bee` | Note 6,5. Falsche Shop-Aussagen, Admin-Vergabe, PDF ungeschützt. | 6 | 6 |
+| R08 | [World Watch Albania](R08-world-watch-albania.md) | 6,0 | 8,0 | 1,5 | `adb2e067` | Note 6. Alles wird ungeprüft veröffentlicht, Admin-Automatik, Zähler-Missbrauch. | 7 | 7 |
+| R09 | [Die Alba Familie (Kinderseite)](R09-die-alba-familie-kinderseite.md) | 6,0 | 8,0 | 1,5 | `8db5c140` | Note 6. Kinderseite: KI ohne Limit, Prompt-Injection möglich, Kinderfragen werden gespeichert. | 6 | 6 |
+| R10 | [Lucky Star Numbers](R10-lucky-star-numbers.md) | 6,0 | 7,5 | 2,0 | `58ea6980` | Note 6. Chat ohne Limit, irreführende Begriffe, kein 18+-Gate. | 6 | 6 |
+| R11 | [Web & AI Solutions Hub (Klarwerk)](R11-web-ai-solutions-hub-klarwerk.md) | 7,0 | 8,5 | 1,0 | `47b36b47` | Note 7. Kontaktformular und Buchung speichern nichts – Leads gehen verloren. | 6 | 6 |
+| R12 | [ClipCraft: Dein Ideenpilot](R12-clipcraft-dein-ideenpilot.md) | 7,0 | 8,5 | 1,0 | `bb718471` | Note 7. Limit umgehbar über ai_usage; Preissektion und Zahlung fehlen. | 6 | 6 |
+| R13 | [Puna Beauty Hub](R13-puna-beauty-hub.md) | 5,5 | 7,5 | 2,0 | `99152909` | Note 5,5. Tote Buttons, erfundene Anbieterinnen ohne Kennzeichnung. | 6 | 6 |
+| R14 | [Puna Beauty Shop](R14-puna-beauty-shop.md) | 6,5 | 8,0 | 1,5 | `6d31424e` | Note 6,5. Bestellung und Preise werden nicht gespeichert. | 6 | 6 |
+| R15 | [Voteverse (Rankly)](R15-voteverse-rankly.md) | 6,0 | 8,0 | 1,5 | `2808a071` | Note 6. Erfundene Startstimmen, schwacher Abstimmungsschutz, Wortfilter sperrt harmlose Wörter. | 6 | 6 |
+| R16 | [BASTION OF FREEDOM – Pi Dash Nise I](R16-bastion-of-freedom-pi-dash-nise-i.md) | 7,0 | 8,5 | 1,0 | `01371116` | Note 7. Warteliste meldet Erfolg trotz Speicherfehler; Demo-Auktion irreführend. | 6 | 6 |
+| R17 | [StarkGemeinsam](R17-starkgemeinsam.md) | 6,0 | 8,0 | 1,5 | `1f056417` | Note 6. Newsletter ist eine Attrappe; Shopify-Ausfall kippt die Startseite. | 6 | 6 |
+| R18 | [AMAZING AI UNIVERSE](R18-amazing-ai-universe.md) | 6,0 | 7,5 | 2,0 | `c6f44b72` | Note 6. Navigation läuft über; Zahlen widersprechen sich; Admin- und Wettbewerbsrecht klären. | 6 | 6 |
+| R19 | [Kühlschrank WG Hub](R19-kuehlschrank-wg-hub.md) | 6,0 | 7,5 | 2,0 | `1b3db8a4` | Note 6. Likes, Kommentare, Teilen und Ton sind Attrappen; nur 9 von 30 Porträts. | 6 | 6 |
+| R20 | [Creator's Hub AI](R20-creator-s-hub-ai.md) | 6,0 | 7,5 | 2,0 | `3d4df38c` | Note 6. Beschreibung verspricht mehr als vorhanden; Admin-Automatik prüfen. | 6 | 6 |
+| R21 | [One Plis (Echoes of Pelasgia)](R21-one-plis-echoes-of-pelasgia.md) | 7,0 | 8,5 | 1,0 | `74177c7b` | Note 7. Suche mit toten Treffern, keine mobile Navigation, Orakel ohne Limit. | 6 | 6 |
+| R22 | [Die 13 Illuminaten](R22-die-13-illuminaten.md) | 7,0 | 8,5 | 1,0 | `6c716278` | Note 7. Chronik mobil kaum bedienbar, Navigation bricht um, Orakel ohne Limit. | 6 | 6 |
+| R23 | [Pflege Compass](R23-pflege-compass.md) | 7,5 | 8,5 | 1,0 | `040da1aa` | Note 7,5. Quellen und Stand pro Bundesland fehlen; lang-Attribut fest „en“. | 6 | 6 |
+| R24 | [PunaKI Handwerker Shop](R24-punaki-handwerker-shop.md) | 7,5 | 8,5 | 1,0 | `a2ddadf7` | Note 7,5. Kein Weg vom Warenkorb zum Betrieb (Checkout gesperrt). | 5 | 5 |
+
+Noten sind Schätzungen des Prüfers aus Code und Screenshot (1 bis 10), keine Messung. 9,5 verlangt zusätzlich echte Inhalte, echte Nutzung, Tests, Performance und rechtliche Prüfung (siehe `NOTE-9-5.md`).
 
 ## Alle Prompts mit Status
 
