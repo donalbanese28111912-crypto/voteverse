@@ -5,6 +5,7 @@ import csv, os, re, sys
 here = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(here, "data"))
 from part3 import P  # noqa
+from extras import X  # noqa
 
 STATUSES = ["offen", "gesendet", "erledigt", "übersprungen"]
 master = open(os.path.join(here, "master-prompt.txt"), encoding="utf-8").read().strip()
@@ -28,6 +29,7 @@ for p in sorted(P, key=lambda x: x["rank"]):
     rows.append((f"{rk}-M", p["rank"], p["name"], "Master-Prompt (Grundregeln) zuerst senden", 2, p))
     for i, q in enumerate(p["prompts"], 1):
         rows.append((f"{rk}-{i:02d}", p["rank"], p["name"], q["title"], q["prio"], (p, q)))
+    rows.append((f"{rk}-H", p["rank"], p["name"], "GESAMT-Prompt: Hochstufung auf 9,5 (alles in einem)", 2, p))
 
 # status.csv ergänzen, nichts überschreiben
 for r in rows:
@@ -69,5 +71,16 @@ for p in sorted(P, key=lambda x: x["rank"]):
         pid = f"{rk}-{i:02d}"
         full = WRAP.format(name=p["name"], text=q["text"], done=q["done"])
         lines += [f"## {pid} · {q['title']}", f"Priorität: {PRIO[q['prio']]} · Status: {status[pid]['status']}", "", "```", full, "```", ""]
+    n0, n1 = NOTEN[p["rank"]]
+    x = X[p["rank"]]
+    steps = "\n".join(f"{j}. {q['title']}: {q['text']}" for j, q in enumerate(p["prompts"], 1))
+    aus = "\n".join(f"- {a}" for a in x["ausbau"])
+    big = (f"Gesamtauftrag „Qualitätsstufe 9,5“ für das Projekt {p['name']}. Aktuelle Note ca. {fmt(n0)} von 10. Ziel: so weit wie ohne Eingriffe des Betreibers möglich (Ziel 9,5, realistisch {fmt(n1)}+). Arbeite in Phasen und melde nach jeder Phase kurz den Stand. Ändere nichts an Impressum, AGB und Datenschutz. Lies zuerst AGENTS.md und roadmap.md. Platzhalter wie {{ADMIN_EMAIL}} vorher ersetzen.\n\n"
+           f"PHASE 1 – Grundregeln (Sicherheit, Ehrlichkeit, Bedienung, Technik):\n{master}\n\n"
+           f"PHASE 2 – Projektaufgaben in dieser Reihenfolge:\n{steps}\n\n"
+           f"PHASE 3 – Ausbau Richtung 9,5:\n{aus}\n\n"
+           f"PHASE 4 – Messen und berichten: Tests (Vitest) und, wo sinnvoll, ein End-to-End-Test für den Hauptweg; Lighthouse-Werte für Start und Hauptseite (Ziel mindestens 90 bei Leistung, Barrierefreiheit, SEO); Mobilansicht 390 px geprüft. Liefere am Ende eine Tabelle: Kriterium (Sicherheit, Ehrlichkeit, Funktion, Design, Qualität, Inhalt) – Soll – Ist – offen, und eine ehrliche Selbstnote 1 bis 10. Nenne klar, was du NICHT erledigen konntest.\n\n"
+           f"Nicht per Prompt lösbar (Aufgabe des Betreibers, nicht erfinden): " + "; ".join(x["betreiber"]))
+    lines += [f"## {rk}-H · GESAMT-Prompt: Hochstufung auf 9,5", f"Status: {status[rk+'-H']['status']} · Hinweis: Sehr lang. Bei größeren Projekten erst die Einzel-Prompts senden und diesen Prompt zum Abschluss nutzen.", "", "```", big, "```", ""]
     open(os.path.join(here, f"{rk}-{slug(p['name'])}.md"),"w",encoding="utf-8").write("\n".join(lines))
 print(len(rows), "Prompts,", len(P), "Projekte")

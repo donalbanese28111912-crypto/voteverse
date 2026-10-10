@@ -16,6 +16,10 @@ Quelle des Stands: `docs/prompts/status.csv` (Spalten `id;status;gesendet_am;not
 6. Wird ein Prompt vom Agenten gemeldet als erledigt, bestätige das erst nach Prüfung des Berichts; sonst „gesendet“ lassen.
 7. Neue Funde oder neue Projekte: Prompt in `docs/prompts/data/part*.py` ergänzen, `build.py` ausführen.
 
+## Prompt-Arten
+- `R##-M` Master-Prompt (Grundregeln), `R##-01…` Einzel-Prompts, `R##-H` Gesamt-Prompt „Hochstufung auf 9,5“ (alles in einem, sehr lang; erst Einzel-Prompts, dann H).
+- `docs/prompts/NOTE-9-5.md` erklärt, was für 9,5 zusätzlich nötig ist (Betreiber-Aufgaben).
+
 ## Regeln
 - Den Master-Prompt (`R##-M`) pro Projekt zuerst senden, danach die Einzel-Prompts.
 - Nichts als „erledigt“ markieren, was nicht geprüft wurde.
